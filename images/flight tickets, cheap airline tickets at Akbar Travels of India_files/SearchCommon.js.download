@@ -1,0 +1,983 @@
+// Minified by MiniME from toptensoftware.com
+var resultCompelte=false,SearchType="",SectorType="",travelType="",special="",table="",onwardcached=[],returncached=[],
+MultiCityCached=[],MultiCityCachedInt=[],InitalFlightResult=[],tmp="",fltName="",count=0,minFare=1000000,maxFare=0,
+curMinFare=0,curMaxFare=0,limit=20,offset=0,totalflightcount=0,visibleflights=0,preFieldName="",preReverse=false,source=
+false,firstTime=false,head_click_flag=[];head_click_flag[1]=true;head_click_flag[2]=true;head_click_flag[3]=true;
+head_click_flag[4]=true;head_click_flag[5]=true;head_click_flag[6]=true;var airlineCount=0,strInnerDiv="",matrixflag=
+false,airlinename="",airlinematrixlist=[],lowestFareOnwardFlight,sellist="",matrixopen=false,prevstatus=null,filtercount
+=0,ClickedButtonID=0,arle_click_flag=false,multicount=0,searchcount=0,cnt=0,ismodifysearchfirstclick=false,
+multicityresultcompleted=false,IsAppliedFilter=false,rsffaretype="",trackerid=0,departureType="o",stopType="o",
+arrivalType="o",DeptAirports="",ArrAirports="",ConAirports="",EnableNearByFilter=false,FilterArray={faretype:{},stops:{}
+,Farescale:{},departTimings:{},Airlines:{},arrivalTimings:{},LayoverTime:{},DepartAirports:{},ArrivalAirports:{},
+ConnectingAirports:{}};FillObject("All","o");FillObject("All","r");function FillObject(b,a){if(b!="showall")switch(b){
+case"fareType":FilterArray.faretype[0]={Refund:true,nonRefund:true,PrevRefund:true,PrevNonRefund:true};break;case"stops"
+:if(a.toUpperCase()=="O")FilterArray.stops[0]={NonStp:true,OneStp:true,TwoStp:true,PrevNonStp:true,PrevOneStp:true,
+PrevTwoStp:true};else FilterArray.stops[1]={NonStp:true,OneStp:true,TwoStp:true,PrevNonStp:true,PrevOneStp:true,
+PrevTwoStp:true};break;case"farescale":if(a.toUpperCase()=="O")FilterArray.Farescale[0]={MinFare:FilterArray.Farescale[0
+].MinFare,MaxFare:FilterArray.Farescale[0].MaxFare,OrginalMin:FilterArray.Farescale[0].OrginalMin,OriginalMaxFAre:
+FilterArray.Farescale[0].OriginalMaxFAre,PrevMinFare:FilterArray.Farescale[0].MinFare,PrevMaxFare:FilterArray.Farescale[
+0].MaxFare};else FilterArray.Farescale[1]={MinFare:FilterArray.Farescale[1].MinFare,MaxFare:FilterArray.Farescale[1].
+MaxFare,OrginalMin:FilterArray.Farescale[1].OrginalMin,OriginalMaxFAre:FilterArray.Farescale[1].OriginalMaxFAre,
+PrevMinFare:FilterArray.Farescale[1].MinFare,PrevMaxFare:FilterArray.Farescale[1].MaxFare};break;case"layover":if(a.
+toUpperCase()=="O")FilterArray.LayoverTime[0]={MinLayover:FilterArray.LayoverTime[0].MinLayover,MaxLayover:FilterArray.
+LayoverTime[0].MaxLayover,OrginalMinLayover:FilterArray.LayoverTime[0].OrginalMinLayover,OriginalMaxLayover:FilterArray.
+LayoverTime[0].OriginalMaxLayover,PrevMinLayover:FilterArray.LayoverTime[0].MinLayover,PrevMaxLayover:FilterArray.
+LayoverTime[0].MaxLayover};else FilterArray.LayoverTime[1]={MinLayover:FilterArray.LayoverTime[1].MinLayover,MaxLayover:
+FilterArray.LayoverTime[1].MaxLayover,OrginalMinLayover:FilterArray.LayoverTime[1].OrginalMinLayover,OriginalMaxLayover:
+FilterArray.LayoverTime[1].OriginalMaxLayover,PrevMinLayover:FilterArray.LayoverTime[1].MinLayover,PrevMaxLayover:
+FilterArray.LayoverTime[1].MaxLayover};break;case"dprtTim":if(a.toUpperCase()=="O")FilterArray.departTimings[0]={Morn:
+true,AftreNoon:true,Night:true,MidNight:true,PrevMorn:true,PrevAftrnoon:true,PrevNight:true,PrevModNight:true};else 
+FilterArray.departTimings[1]={Morn:true,AftreNoon:true,Night:true,MidNight:true,PrevMorn:true,PrevAftrnoon:true,
+PrevNight:true,PrevModNight:true};break;case"airlines":FilterArray.Airlines[0]={PrevAirlines:FilterArray.Airlines[0].
+PrevAirlines};break;case"arrivalTim":if(a.toUpperCase()=="O")FilterArray.arrivalTimings[0]={Morn:true,AftreNoon:true,
+Night:true,MidNight:true,PrevMorn:true,PrevAftrnoon:true,PrevNight:true,PrevModNight:true};else FilterArray.
+arrivalTimings[1]={Morn:true,AftreNoon:true,Night:true,MidNight:true,PrevMorn:true,PrevAftrnoon:true,PrevNight:true,
+PrevModNight:true};break;case"departAirports":FilterArray.DepartAirports[0]={PrevDepartAirports:FilterArray.
+DepartAirports[0].PrevDepartAirports};break;case"arrivalAirports":FilterArray.ArrivalAirports[0]={PrevArrivalAirports:
+FilterArray.ArrivalAirports[0].PrevArrAirports};break;case"connectingAirports":FilterArray.ConnectingAirports[0]={
+PrevConnectingAirports:FilterArray.ConnectingAirports[0].PrevConAirports};break;case"All":if(a.toUpperCase()=="O"){
+FilterArray.stops[0]={NonStp:true,OneStp:true,TwoStp:true,PrevNonStp:true,PrevOneStp:true,PrevTwoStp:true};FilterArray.
+Farescale[0]={MinFare:"",MaxFare:"",OrginalMin:"",OriginalMaxFAre:"",PrevMinFare:"",PrevMaxFare:""};FilterArray.
+departTimings[0]={Morn:true,AftreNoon:true,Night:true,MidNight:true,PrevMorn:true,PrevAftrnoon:true,PrevNight:true,
+PrevModNight:true};FilterArray.arrivalTimings[0]={Morn:true,AftreNoon:true,Night:true,MidNight:true,PrevMorn:true,
+PrevAftrnoon:true,PrevNight:true,PrevModNight:true};FilterArray.LayoverTime[0]={MinLayover:"",MaxLayover:"",
+OrginalMinLayover:"",OriginalMaxLayover:"",PrevMinLayover:"",PrevMaxLayover:""}}else{FilterArray.stops[1]={NonStp:true,
+OneStp:true,TwoStp:true,PrevNonStp:true,PrevOneStp:true,PrevTwoStp:true};FilterArray.Farescale[1]={MinFare:"",MaxFare:""
+,OrginalMin:"",OriginalMaxFAre:"",PrevMinFare:"",PrevMaxFare:""};FilterArray.departTimings[1]={Morn:true,AftreNoon:true,
+Night:true,MidNight:true,PrevMorn:true,PrevAftrnoon:true,PrevNight:true,PrevModNight:true};FilterArray.arrivalTimings[1]
+={Morn:true,AftreNoon:true,Night:true,MidNight:true,PrevMorn:true,PrevAftrnoon:true,PrevNight:true,PrevModNight:true};
+FilterArray.LayoverTime[1]={MinLayover:"",MaxLayover:"",OrginalMinLayover:"",OriginalMaxLayover:"",PrevMinLayover:"",
+PrevMaxLayover:""}}FilterArray.faretype[0]={Refund:true,nonRefund:true,PrevRefund:true,PrevNonRefund:true};FilterArray.
+Airlines[0]={PrevAirlines:""};FilterArray.DepartAirports[0]={PrevDepartAirports:""};FilterArray.ArrivalAirports[0]={
+PrevArrivalAirports:""};FilterArray.ConnectingAirports[0]={PrevConnectingAirports:""};break}else if(b=="showall")if(a.
+toUpperCase()=="O"){FilterArray.faretype[0]={Refund:true,nonRefund:true,PrevRefund:true,PrevNonRefund:true};FilterArray.
+stops[0]={NonStp:true,OneStp:true,TwoStp:true,PrevNonStp:true,PrevOneStp:true,PrevTwoStp:true}}else{FilterArray.faretype
+[1]={Refund:true,nonRefund:true,PrevRefund:true,PrevNonRefund:true};FilterArray.stops[1]={NonStp:true,OneStp:true,TwoStp
+:true,PrevNonStp:true,PrevOneStp:true,PrevTwoStp:true}}}$(document).ready(function(){$("#divDepartureReturn").css(
+"display","none");$("#divStopReturn").css("display","none");$("#divArrivalReturn").css("display","none");$(
+".leftitem input[type='checkbox']").click(function(){IsAppliedFilter=false});FilterSliderRange();firstTime=true;
+resize_search();searchcount=$("#SearchCount").val();if($("#IsMultiCity").val()=="True"&&$("#TravelType").val().
+toUpperCase()!="I")lperc=80/(4*searchcount);if($("#IsMultiCity").val()=="True"&&$("#TravelType").val().toUpperCase()==
+"I"){loaderimage();setTimeout(function(){i()},5000)}else for(var d=0;d<searchcount;d++){onwardcached=[];setTimeout(
+"getSearchResult("+d+")",100)}$("#divLoading").css("display","block");$("#progressbar > span").each(function(){$(this).
+data("origWidth",$(this).width()).width("20%")});function i(){var c="/Flight/getResultForMulticity/"+$("#Key").val();$.
+ajax({url:c,cache:false,dataType:"json",async:true,success:function(b){if(b!=null){MultiCityCachedInt=b;showFlights(b);$
+("#progressbar > span").each(function(){$(this).stop(true,false).animate({width:"100%"},1000,function(){$("#divloading")
+.stop(true,true).animate({height:"0px",opacity:"0",marginTop:"0",paddingBottom:"0"},600,"easeOutCubic",function(){$(
+"#divloading").css({display:"none"})})})})}}})}var h=false;$(".modify-srch-btn").click(function(f){isfirstload=true;if(!
+$("#intTab").hasClass("intern")){}if($("input[name='SearchType']:checked").val()=="O")showReturn("hidden");else if($(
+"input[name='SearchType']:checked").val()=="M"){$("#multicitydiv").css("display","");$("#searchdiv").css("display",
+"none")}else showReturn("");var e=".tab-disply";if(h==false){h=true;$(e).css({borderBottom:"3px solid #960606"});$(e).
+stop(true,false).slideDown(600);$(".arow-icons").css({"background-position":"-14px -522px"})}else{h=false;$(e).stop(true
+,false).slideUp(600,"easeInOutCubic",function(){$(e).css({borderBottom:"none"});$(".arow-icons").css({
+"background-position":"-39px -522px"})})}if(ismodifysearchfirstclick==false)for(var c=3;c<=searchcount;c++){
+num_of_cities=c-1;$(".mlti-add").trigger("click")}ismodifysearchfirstclick=true});var a=[];a[1]=true;a[2]=true;a[3]=true
+;a[4]=true;a[5]=true;a[6]=true;a[7]=true;a[8]=true;a[9]=true;a[10]=true;$(".dis-head").click(function(e){if(
+resultCompelte==true){var g=e.target||e.srcElement,f=g.id,b=f.match(/\d/g);b=b.join("");var c="#fli"+b;if(a[b]==false){a
+[b]=true;$(c).css({display:"block"});$(c).stop(true,false).animate({height:$(c)[0].scrollHeight+"px"},600,
+"easeInOutCubic");$("#flih"+b+" span").css({"background-position":"-80px -522px",height:"5px",marginTop:"5px"})}else{a[b
+]=false;$(c).stop(true,false).animate({height:"0px"},600,"easeInOutCubic",function(){$("#flih"+b+" span").css({
+"background-position":"-69px -522px",height:"9px",marginTop:"3px"})})}}else return false})});function closeAllFilters(d)
+{var a=[];a[1]=true;a[2]=true;a[3]=true;a[4]=true;a[5]=true;a[6]=true;a[7]=true;a[8]=true;a[9]=true;a[10]=true;if(d==
+"close")for(var b=0;b<=10;b++){var c="#fli"+b;if(a[b]==false){a[b]=true;$(c).css({display:"block"});$(c).stop(true,false
+).animate({height:$(c)[0].scrollHeight+"px"},600,"easeInOutCubic");$("#flih"+b+" span").css({"background-position":
+"-80px -522px",height:"5px",marginTop:"5px"})}else{a[b]=false;$(c).stop(true,false).animate({height:"0px"},600,
+"easeInOutCubic",function(){$("#flih"+b+" span").css({"background-position":"-69px -522px",height:"9px",marginTop:"3px"}
+)})}}else if(d=="open"){a[1]=false;a[2]=false;a[3]=false;a[4]=false;a[5]=false;a[6]=false;a[7]=true;a[8]=true;a[9]=true;
+a[10]=true;EnableDomMC=$("#DomMC").val().toLowerCase()=="false"?false:true;if($("#TravelType").val().toUpperCase()=="D"
+&&$("#SearchType").val().toUpperCase()=="O"&&EnableDomMC)a[7]=false;EnableNearByFilter=$("#hdnEnableAirportFilter").val(
+).toLowerCase()=="false"?false:true;if(EnableNearByFilter){a[8]=false;a[9]=false;a[10]=false}for(var b=0;b<=10;b++){var 
+c="#fli"+b;if(a[b]==false){a[b]=true;$(c).css({display:"block"});$(c).stop(true,false).animate({height:$(c)[0].
+scrollHeight+"px"},600,"easeInOutCubic");$("#flih"+b+" span").css({"background-position":"-80px -522px",height:"5px",
+marginTop:"5px"})}else{a[b]=false;$(c).stop(true,false).animate({height:"0px"},600,"easeInOutCubic",function(){$("#flih"
++b+" span").css({"background-position":"-69px -522px",height:"9px",marginTop:"3px"})})}}}}var loadingFlights=true,
+TempArray=[],IsProces=false,multiCashedindexFlightcount=[];function getSearchResult(b){loaderimage();var f={Id:$("#Key")
+.val(),index:b};$.ajax({url:"/Flight/getResult",data:f,cache:false,dataType:"json",async:true,success:function(e){if(e){
+var a=e;resultCompelte=a.Completed;if(a.OnwardData!=null&&a.OnwardData.length>0){var g;totalflightcount+=a.OnwardData.
+length;SearchType=a.SearchType;SectorType=a.SectorType;travelType=a.TravelType;special=a.Special;$("#SectorType").val(
+SectorType);$("#SearchType").val(SearchType),$("#travelType").val(travelType);if($("#IsMultiCity").val()=="True"){
+TempArray=[];if(MultiCityCached[b]!=null)TempArray=MultiCityCached[b];TempArray=TempArray.concat(a.OnwardData);
+MultiCityCached[b]=TempArray;if(!IsProces){IsProces=true;multiCashedindexFlightcount[b]=MultiCityCached[b].length;
+MultiCitySort(MultiCityCached,"SortNetFare,JourneyInMinutes,DepartureDateTime,ArrivalDateTime",false,"","",b);$(
+".display-view").css("display","");showflights(MultiCityCached[b],b);IsProces=false}}else{onwardcached=onwardcached.
+concat(a.OnwardData);if(a.ReturnData!=null&&a.ReturnData.length>0)returncached=returncached.concat(a.ReturnData);$(
+".display-view").show();showflights(a,b)}if(firstTime){initialize();if(SearchType!="R"&&(SectorType=="I"||SectorType==
+"D")&&$("#IsMultiCity").val()!="true")closeAllFilters("close");if(SearchType=="R"&&SectorType=="I"&&$("#IsMultiCity").
+val()!="true"){closeAllFilters("close");$("#divjourneytype").css("display","")}else{$(".prvs").css("width","20%");$(
+".prvs a").css("padding","0 4px")}firstTime=false}}if(resultCompelte==false){if(SearchType=="R"&&SectorType=="D"||
+SectorType=="D"&&$("#IsMultiCity").val()=="True")$("input[type=radio]").attr("disabled",true);g=setTimeout(
+"getSearchResult("+b+")",10)}else{cnt=cnt+1;if($("#IsMultiCity").val()=="True"&&cnt==searchcount){for(var c=0;c<
+searchcount;c++)if(MultiCityCached[c]!=null&&MultiCityCached[c].length>0)if(multiCashedindexFlightcount[c]<
+MultiCityCached[c].length){MultiCitySort(MultiCityCached,
+"SortNetFare,JourneyInMinutes,DepartureDateTime,ArrivalDateTime",false,"","",c);showflights(MultiCityCached[c],c)}if(
+MultiCityCached.length>0){MultiCityResultCompleted();$("#progressbar > span").each(function(){$(this).stop(true,false).
+animate({width:"100%"},1000,function(){$("#divloading").stop(true,true).animate({height:"0px",opacity:"0",marginTop:"0",
+paddingBottom:"0"},600,"easeOutCubic",function(){$("#divloading").css({display:"none"});if($(".filter-cont")[0])$(
+".filter-cont").css({position:"relative",top:$(".listcont-bottom").offset().top-$(".filter-cont").offsetParent().offset(
+).top});if($(".sltd-flights-cont")[0]){$(".sltd-flights-inner").html("");$(".fltselectbox").clone().appendTo(
+".sltd-flights-inner");$(".sltd-flights-inner").css({width:$(".fltselectbox").width(),height:$(".fltselectbox").
+outerHeight(true)});$(".sltd-flights-cont").css({top:-$(".sltd-flights-inner").outerHeight(true)});if($(window).
+scrollTop()>$(".listcont-bottom").offset().top)$(".sltd-flights-cont").show();else $(".sltd-flights-cont").hide()}var h=
+$(".showing-box").outerWidth(true)*$(".showing-box").length;if(h>$(".list-cont").width()){$(".listcont-slider").width(h)
+;$(".shdw-left").hide();$(".shdw-right").show()}else{$(".listcont-slider").width("100%");$(".showing-box,.flight-show").
+width($(".list-cont").width()/$(".showing-box").length-7);$(".shadow").hide()}});ShowAirlineMatrixDiv(false);if($(
+"#IsMultiCity").val()!="True")setTimeout(function(){arle_click_flag=true;ShowAirlineMatrixDiv(false)},4000);else 
+setTimeout(function(){arle_click_flag=true;if(multicityresultcompleted==true){}},4000)})})}else{$("#divNoResult").css(
+"display","");$(".split-box").css("display","");if($("#SearchCount").val()>2)$(".shadow").css("display","")}}
+InitalFlightResult=onwardcached;if(SearchType!="R"||SectorType!="D")if(SectorType=="I"&&SearchType=="R")sort(
+onwardcached,"Weightage,SortNetFare,TotDuration,DepartureDateTime,ArrivalDateTime",false,"","flightresult");else if(
+SectorType=="I"&&SearchType=="O"||SectorType=="D"&&SearchType=="O")sort(onwardcached,
+"Weightage,NetFare,JourneyInMinutes,DepartureDateTime,ArrivalDateTime",false,"","flightresult");else sort(onwardcached,
+"Weightage,SortNetFare,JourneyInMinutes,DepartureDateTime,ArrivalDateTime",false,"","flightresult");SetIsAppend();
+loadingFlights=false;BindingCall();ResultCompleted();if(SearchType!="R"&&(SectorType=="I"||SectorType=="D")&&$(
+"#IsMultiCity").val()!="True")closeAllFilters("open");if(SearchType=="R"&&SectorType=="I"&&$("#IsMultiCity").val()!=
+"True")closeAllFilters("open");if($("#IsMultiCity").val()!="True")$("#progressbar > span").each(function(){$(this).stop(
+true,false).animate({width:"100%"},1000,function(){$("#divloading").stop(true,true).animate({height:"0px",opacity:"0",
+marginTop:"0",paddingBottom:"0"},600,"easeOutCubic",function(){$("#divloading").css({display:"none"});if($(
+".filter-cont")[0])$(".filter-cont").css({position:"relative",top:$(".listcont-bottom").offset().top-$(".filter-cont").
+offsetParent().offset().top});if($(".sltd-flights-cont")[0]){$(".sltd-flights-inner").html("");$(".fltselectbox").clone(
+).appendTo(".sltd-flights-inner");$(".sltd-flights-inner").css({width:$(".fltselectbox").width(),height:$(
+".fltselectbox").outerHeight(true)});$(".sltd-flights-cont").css({top:-$(".sltd-flights-inner").outerHeight(true)});if($
+(window).scrollTop()>$(".listcont-bottom").offset().top)$(".sltd-flights-cont").show();else $(".sltd-flights-cont").hide
+()}});ShowAirlineMatrixDiv(false);if($("#IsMultiCity").val()!="True")setTimeout(function(){arle_click_flag=true;
+ShowAirlineMatrixDiv(false)},4000);else setTimeout(function(){arle_click_flag=true;if(multicityresultcompleted==true){}}
+,4000)})});if($("#IsMultiCity").val()!="True")if(onwardcached.length==0){$("#divNoResult").css("display","");$(
+"#arle-btn").css("display","none");$("#divmatrix").css("display","none");return false}lowestFareOnwardFlight=
+onwardcached[0]}}}})}function prevDateSearchRtn(c){var b=document.getElementById("Departure").value,a=new Date(b.split(
+"/")[2],b.split("/")[1]-1,b.split("/")[0],0,0,0);a.setDate(a.getDate()-1);if(c=="R")document.getElementById("roundtrip")
+.checked=true;b=(a.getDate()<10?"0"+a.getDate():a.getDate())+"/"+(a.getMonth()+1<10?"0"+(a.getMonth()+1):a.getMonth()+1)
++"/"+a.getFullYear();document.getElementById("Departure").value=b;return startSearch()}function nextDateSearchRtn(c){var
+ b=document.getElementById("Departure").value,a=new Date(b.split("/")[2],b.split("/")[1]-1,b.split("/")[0],0,0,0);a.
+setDate(a.getDate()+1);if(c=="R"){var d=document.getElementById("Return").value;document.getElementById("roundtrip").
+checked=true;if(b==d)return;else{b=(a.getDate()<10?"0"+a.getDate():a.getDate())+"/"+(a.getMonth()+1<10?"0"+(a.getMonth()
++1):a.getMonth()+1)+"/"+a.getFullYear();document.getElementById("Departure").value=b;return startSearch()}}if(c=="O"){b=
+(a.getDate()<10?"0"+a.getDate():a.getDate())+"/"+(a.getMonth()+1<10?"0"+(a.getMonth()+1):a.getMonth()+1)+"/"+a.
+getFullYear();document.getElementById("Departure").value=b}return startSearch()}function DisplayNoResult(){var a="",b=""
+;b="flightresult";a+="<div class='dispylist-main'>";a+="<div class='bknstus-errordiv'>";a+=
+"<div class='display-new dis-err flt-lft mar-left'></div>";a+="<div class='dis-errortxt'>";a+=
+"<div class='bs-bk-sts-r'>We are sorry, no flight were found that match your criteria</div>";a+=
+"<div class='bknstus-content'><b> Please change the search criteria and try again.</b> </div>";a+=
+"<div class='bknstus-content'>Departure : Mumbai [17/05/2012] to New Delhi </div>";a+="<div class='bknstus-content'>";a
++="<div class='new-srch flt-lft bld'><a href='Flight/Index'>Click here to start a new search</a></div>";a+=
+"<div class='new-srch flt-lft bld'>Any help call us on <span class='red-color'>"+"#tollfree".val()+"</span></div>";a+=
+"</div>";a+="</div>";a+="</div>";a+="</div>";getObj(b).innerHTML=a;$("#divloading").hide()}var isFaredetailsShowing=
+false;function faredetails(k){if(isFaredetailsShowing==false){var a,b;if($("#RSFType").val()!=undefined&&$("#RSFType").
+val()!=null&&$("#RSFType").val()!=""&&$("#RSFType").val()=="1"&&objRSFowflight!=null&&objRSFrtflight!=null){a=
+objRSFowflight;b=objRSFrtflight}else{a=objowflight;b=objrtflight}if(a!=null&&b!=null){isFaredetailsShowing=true;var c=""
+;c=c+
+"<div class='fare-dtle-list-pp'><div class='fare-list-head br-botm-das'><div class='flt-lft'> Fare Details </div></div><div class='basic-fare br-botm-das'> <div class='flt-lft'> Basic Fare </div> </div>"
+;if(a.AdultCount>0){var z=a.FareDetail.AdultBaseFare+b.FareDetail.AdultBaseFare;c=c+
+"<div class='list-main br-botm-das'><div class='flt-lft'>Adult x "+a.AdultCount+"</div><div class='flt-rt'>`"+z+
+"</div></div>"}if(a.ChildCount>0){var B=a.FareDetail.ChildBaseFare+b.FareDetail.ChildBaseFare;c=c+
+"<div class='list-main br-botm-das'><div class='flt-lft'>Child x "+a.ChildCount+"</div><div class='flt-rt'>`"+B+
+"</div></div>"}if(a.InfantCount>0){var D=a.FareDetail.InfantBaseFare+b.FareDetail.InfantBaseFare;c=c+
+"<div class='list-main br-botm-das'><div class='flt-lft'>Infant x "+a.InfantCount+"</div><div class='flt-rt'>`"+D+
+"</div></div>"}var r=a.TaxDetail.AdultFuelTax*a.AdultCount+a.TaxDetail.ChildFuelTax*a.ChildCount+a.TaxDetail.
+InfantFuelTax*a.InfantCount+(b.TaxDetail.AdultFuelTax*a.AdultCount+b.TaxDetail.ChildFuelTax*a.ChildCount+b.TaxDetail.
+InfantFuelTax*a.InfantCount),w=a.TaxDetail.AdultPSFTax*a.AdultCount+a.TaxDetail.ChildPSFTax*a.ChildCount+a.TaxDetail.
+InfantPSFTax*a.InfantCount+(b.TaxDetail.AdultPSFTax*a.AdultCount+b.TaxDetail.ChildPSFTax*a.ChildCount+b.TaxDetail.
+InfantPSFTax*a.InfantCount),o=a.TaxDetail.AdultUserDevelopmentTax*a.AdultCount+a.TaxDetail.ChildUserDevelopmentTax*a.
+ChildCount+a.TaxDetail.InfantUserDevelopmentTax*a.InfantCount+(b.TaxDetail.AdultUserDevelopmentTax*a.AdultCount+b.
+TaxDetail.ChildUserDevelopmentTax*a.ChildCount+b.TaxDetail.InfantUserDevelopmentTax*a.InfantCount),u=a.TaxDetail.
+AdultJNTax*a.AdultCount+a.TaxDetail.ChildJNTax*a.ChildCount+a.TaxDetail.InfantJNTax*a.InfantCount+(b.TaxDetail.
+AdultJNTax*a.AdultCount+b.TaxDetail.ChildJNTax*a.ChildCount+b.TaxDetail.InfantJNTax*a.InfantCount),A=(a.TaxDetail.
+AdultAPITax+a.TaxDetail.AdultCongestionTax+a.TaxDetail.AdultOtherTax)*a.AdultCount+(b.TaxDetail.AdultAPITax+b.TaxDetail.
+AdultCongestionTax+b.TaxDetail.AdultOtherTax)*a.AdultCount,C=(a.TaxDetail.ChildAPITax+a.TaxDetail.ChildCongestionTax+a.
+TaxDetail.ChildOtherTax)*a.ChildCount+(b.TaxDetail.ChildAPITax+b.TaxDetail.ChildCongestionTax+b.TaxDetail.ChildOtherTax)
+*a.ChildCount,E=(a.TaxDetail.InfantAPITax+a.TaxDetail.InfantCongestionTax+a.TaxDetail.InfantOtherTax)*a.InfantCount+(b.
+TaxDetail.InfantAPITax+b.TaxDetail.InfantCongestionTax+b.TaxDetail.InfantOtherTax)*a.InfantCount,i=A+a.FareDetail.
+TotalAdultST+a.FareDetail.TotalAdultSC+a.FareDetail.AdultTransFee+a.FareDetail.AdultCommissionTDS+a.FareDetail.
+AdultDiscountTDS+b.FareDetail.TotalAdultST+b.FareDetail.TotalAdultSC+b.FareDetail.AdultTransFee+b.FareDetail.
+AdultCommissionTDS+b.FareDetail.AdultDiscountTDS,j=C+a.FareDetail.TotalChildST+a.FareDetail.TotalChildSC+a.FareDetail.
+ChildTransFee+a.FareDetail.ChildCommissionTDS+a.FareDetail.ChildDiscountTDS+b.FareDetail.TotalChildST+b.FareDetail.
+TotalChildSC+b.FareDetail.ChildTransFee+b.FareDetail.ChildCommissionTDS+b.FareDetail.ChildDiscountTDS,m=E+a.FareDetail.
+TotalInfantST+a.FareDetail.TotalInfantSC+a.FareDetail.InfantTransFee+a.FareDetail.InfantCommissionTDS+a.FareDetail.
+InfantDiscountTDS+b.FareDetail.TotalInfantST+b.FareDetail.TotalInfantSC+b.FareDetail.InfantTransFee+b.FareDetail.
+InfantCommissionTDS+b.FareDetail.InfantDiscountTDS,p=a.TaxDetail.AdultOtherTaxAll*a.AdultCount,q=a.TaxDetail.
+ChildOtherTaxAll*a.ChildCount,t=a.TaxDetail.InfantOtherTaxAll*a.InfantCount,f=parseFloat(r)+parseFloat(w)+parseFloat(o)+
+parseFloat(u)+parseFloat(i)+parseFloat(j)+parseFloat(m)+parseFloat(p)+parseFloat(q)+parseFloat(t),s=$(
+"#hdnAvailabilityDiscountsDom").val().split(","),d=false,e=false;for(var n=0;n<s.length;n++){if(s[n]==a.AirlineCode)d=
+true;if(s[n]==b.AirlineCode)e=true}if(d)f=f-(a.FareDetail.TotalAdultST+a.FareDetail.TotalChildST+a.FareDetail.
+TotalInfantST);if(e)f=f-(b.FareDetail.TotalAdultST+b.FareDetail.TotalChildST+b.FareDetail.TotalInfantST);if(d||e)c=c+
+"<div class='basic-fare-tax br-botm-das'><div class='flt-lft'>Tax &amp; Charges</div><div class='flt-rt'>`"+Math.round(f
+.toFixed(2))+"</div></div>";else c=c+
+"<div class='basic-fare-tax br-botm-das'><div class='flt-lft'>Tax &amp; Charges</div><div class='flt-rt'>`"+Math.round(f
+.toFixed(2))+"</div></div>";c=c+"<div class='gr-fr-main-pp'>";if(r>0)c=c+
+"<div class='list-main br-botm-das'><div class='flt-lft'>Fuel Surcharge</div><div class='flt-rt'>`"+Math.round(r)+
+"</div></div>";if(w>0)c=c+
+"<div class='list-main br-botm-das'><div class='flt-lft'>Psgr Svs. Fee</div><div class='flt-rt'>`"+Math.round(w)+
+"</div></div>";if(o>0)if(a.AirlineCode=="SG")c=c+
+"<div class='list-main br-botm-das'><div class='flt-lft'>User Dev. Fee- Departure(UDF)</div><div class='flt-rt'>`"+Math.
+round(o)+"</div></div>";else c=c+
+"<div class='list-main br-botm-das'><div class='flt-lft'>User Dev. Fee</div><div class='flt-rt'>`"+Math.round(o)+
+"</div></div>";if(u>0)c=c+
+"    <div class='list-main br-botm-das'> <div class='flt-lft'>K3 Tax</div> <div class='flt-rt'>`"+Math.round(u)+
+"</div></div>";if(Math.round(i+j+m)>0){var g=i+j+m;if(d)g=g-(a.FareDetail.TotalAdultST+a.FareDetail.TotalChildST+a.
+FareDetail.TotalInfantST);if(e)g=g-(b.FareDetail.TotalAdultST+b.FareDetail.TotalChildST+b.FareDetail.TotalInfantST);if(d
+||e)c=c+"<div class='list-main br-botm-das'><div class='flt-lft'>Airline Misc</div><div class='flt-rt'>`"+Math.round(g)+
+"</div></div>";else c=c+
+"<div class='list-main br-botm-das'><div class='flt-lft'>Airline Misc</div><div class='flt-rt'>`"+Math.round(i+j+m)+
+"</div></div>"}if(a.AirlineCode=="SG")if(Math.round(p+q+t)>0)c=c+
+"<div class='list-main br-botm-das'><div class='flt-lft'>User Dev. Fee \u2013 Arrival(UDF)</div><div class='flt-rt'>`"+
+Math.round(p+q+t)+"</div></div>";c=c+"</div>";var x=a.GrossFare+b.GrossFare,l=x;if(d==true&&e==true)l=a.FareDetail.
+AdultGross+a.FareDetail.ChildGross+a.FareDetail.InfantGross+b.FareDetail.AdultGross+b.FareDetail.ChildGross+b.FareDetail
+.InfantGross-(a.FareDetail.TotalAdultST+a.FareDetail.TotalChildST+a.FareDetail.TotalInfantST+b.FareDetail.TotalAdultST+b
+.FareDetail.TotalChildST+b.FareDetail.TotalInfantST);else if(d)l=a.FareDetail.AdultGross+a.FareDetail.ChildGross+a.
+FareDetail.InfantGross-(a.FareDetail.TotalAdultST+a.FareDetail.TotalChildST+a.FareDetail.TotalInfantST)+(b.FareDetail.
+AdultGross+b.FareDetail.ChildGross+b.FareDetail.InfantGross);else if(e)l=a.FareDetail.AdultGross+a.FareDetail.ChildGross
++a.FareDetail.InfantGross+(b.FareDetail.AdultGross+b.FareDetail.ChildGross+b.FareDetail.InfantGross)-(b.FareDetail.
+TotalAdultST+b.FareDetail.TotalChildST+b.FareDetail.TotalInfantST);if(d||e)c=c+
+"<div class='basic-fare br-botm-das'><div class='flt-lft'><b>Gross Fare</b></div><div class='flt-rt'><b>`"+Math.round(l)
++"</b></div></div></div>";else c=c+
+"<div class='basic-fare br-botm-das'><div class='flt-lft'><b>Gross Fare</b></div><div class='flt-rt'><b>`"+Math.round(x)
++"</b></div></div></div>";var h=$("#faredetails");h.html(c);h.css("position","fixed");var y=0,v=0;if(document.
+addEventListener){y=$(k.target).offset().top;v=$(k.target).offset().left}else{y=k.clientY;v=k.clientX}h.css("display",""
+);h.css("top",300+"px");h.css("left",v-25);$("#faredetails").stop(true,false).fadeIn(600);$("<div/>").css({width:$(
+"body").width(),height:$("#pagewrap").height()}).appendTo("body").attr("id","overlay").click(function(){$("#faredetails"
+).css("display","none");$(this).remove();isFaredetailsShowing=false})}}else{$("#faredetails").css("display","none");$(
+"#overlay").remove();isFaredetailsShowing=false}}function ApplyFilter(bf,aN){IsAppliedFilter=true;var bc="",bv=0,bz=0,bx
+=0,bp=0,bC=0,bH=0,bm=0,bl=0,bF=0,bu=0,bJ=0,u=aN;filtercount=0;var by=0,bw=0,bo=0,bA=0,bG=0,bk=0,bj=0,bs=false,br=false,
+bB=false,a6=false,bK=0;a6=$("#DomMC").val().toLowerCase()=="false"?false:true;var bn=0,bh=0,bi=0,bQ="",bO="",bP="",bN=0,
+bI=0,aG=false;aG=$("#hdnEnableAirportFilter").val().toLowerCase()=="false"?false:true;$("[name='allAirlines']").each(
+function(b,a){if($(a).attr("checked"))bc=bc+$(a).val()+"|";FilterArray.Airlines[0].PrevAirlines=bc});if(aG){$(
+"[name='allDeptsAirports']").each(function(b,a){if($(a).attr("checked"))bQ=bQ+$(a).val()+"|";FilterArray.DepartAirports[
+0].PrevDepartAirports=bQ});$("[name='allArrAirports']").each(function(b,a){if($(a).attr("checked"))bO=bO+$(a).val()+"|";
+FilterArray.ArrivalAirports[0].PrevArrivalAirports=bO});$("[name='allConAirports']").each(function(b,a){if(travelType.
+toUpperCase()=="D"&&SearchType.toUpperCase()=="R"){if(b==0&&u.toLowerCase()=="r")bP+=FilterArray.ConnectingAirports[0].
+PrevConnectingAirports;if(a.id.split("~")[1].toLowerCase()==u.toLowerCase()){bN++;if($(a).attr("checked")){bP=bP+$(a).
+val()+"|";bI++}FilterArray.ConnectingAirports[0].PrevConnectingAirports=bP}}else{bN++;if($(a).attr("checked")){bP=bP+$(a
+).val()+"|";bI++}FilterArray.ConnectingAirports[0].PrevConnectingAirports=bP}})}var be=[],bg,ad=0;if(u=="o"){be=
+onwardcached;bg="flightresult";ad=0}else ad=1;if($("#hdnEnableTracking").val()=="True"){var aL=false,e="";if($(
+"#chkRefund").is(":checked"))aL=true;if(travelType=="D"&&SearchType!="R"||travelType=="I"){if($("#chkNonStop").is(
+":checked"))e="Non-stop";if($("#chkOneStop").is(":checked"))if(e!="")e+=" | One-stop";else e="One-stop";if($(
+"#chkTwoStop").is(":checked"))if(e!="")e+=" | Two-stops";else e="Two-stops"}else{if($("#chkNonStop"+u).is(":checked"))e=
+"Non-stop";if($("#chkOneStop"+u).is(":checked"))if(e!="")e+=" | One-stop";else e="One-stop";if($("#chkTwoStop"+u).is(
+":checked"))if(e!="")e+=" | Two-stops";else e="Two-stops"}var t="";if(travelType=="D"&&SearchType!="R"||travelType=="I")
+t=$("#amount").text();else t=$("#amount"+u).text();var aK="";if(t!=null){aK=t.split("-")[1];t=t.split("-")[0]}var M="";
+if($("#chkMorningo").is(":checked"))M=$("#chkMorningo").parent().parent().parent().next().text().trim()+"|";if($(
+"#chkMiddayo").is(":checked"))M+=$("#chkMiddayo").parent().parent().parent().next().text().trim()+"|";if($(
+"#chkAfternoono").is(":checked"))M+=$("#chkAfternoono").parent().parent().parent().next().text().trim()+"|";if($(
+"#chkEveningo").is(":checked"))M+=$("#chkEveningo").parent().parent().parent().next().text().trim();var aM=$(
+".sector-details h2").text().trim(),ac=aM.split("(");ac=ac[1].replace(")","");try{TLWrapper.Events.filterapplied(ac,$(
+"#TravelClass option:selected").text(),$("#hdnAdults").val(),$("#hdnChild").val(),$("#hdnInfant").val(),aL,e,t,aK,M,bc,
+aM)}catch(a){}}$.each(bf,function(b,a){bs=false;br=false;bB=false;var i="";if(a.ChannelCode=="MC")i="Multiple Carrier";
+else i=a.AirlineName;bv=0;var h=bc.split("|");for(var b=0;b<h.length;b++)if(travelType=="I"&&SearchType=="R"){if(h[b].
+replace(" ","").toLowerCase()==i.replace(/ /g,"").toLowerCase()||h[b].replace(" ","").toLowerCase()==a.ReturnFlight.
+AirlineName.replace(/ /g,"").toLowerCase())bv=1}else if(h[b].replace(" ","").toLowerCase()==i.replace(/ /g,"").
+toLowerCase())bv=1;if(aG){bn=0;var d=bQ.split("|");for(var b=0;b<d.length;b++)if(d[b].indexOf("~")!=-1){if(travelType==
+"D"&&SearchType=="R"){if(d[b].split("~")[1].toLowerCase()=="o"&&aN=="o"){if(d[b].split("~")[0].replace(" ","").
+toLowerCase()==a.SectorDetails[0].DepartureAirportName.replace(/ /g,"").toLowerCase())bn=1}else if(d[b].split("~")[1].
+toLowerCase()=="r"&&aN=="r")if(d[b].split("~")[0].replace(" ","").toLowerCase()==a.SectorDetails[0].DepartureAirportName
+.replace(/ /g,"").toLowerCase())bn=1}else if(d[b].split("~")[1].toLowerCase()=="o"){if(d[b].split("~")[0].replace(" ",""
+).toLowerCase()==a.SectorDetails[0].DepartureAirportName.replace(/ /g,"").toLowerCase())bn=1}else if(d[b].split("~")[1].
+toLowerCase()=="r")if(d[b].split("~")[0].replace(" ","").toLowerCase()==a.ReturnFlight.SectorDetails[0].
+DepartureAirportName.replace(/ /g,"").toLowerCase())bn=1}else if(d[b].replace(" ","").toLowerCase()==a.SectorDetails[0].
+DepartureAirportName.replace(/ /g,"").toLowerCase())bn=1;bh=0;var c=bO.split("|");for(var b=0;b<c.length;b++)if(c[b].
+indexOf("~")!=-1){if(travelType=="D"&&SearchType=="R"){if(c[b].split("~")[1].toLowerCase()=="o"&&aN=="o"){if(c[b].split(
+"~")[0].replace(" ","").toLowerCase()==a.SectorDetails[a.SectorDetails.length-1].ArrivalAirportName.replace(/ /g,"").
+toLowerCase())bh=1}else if(c[b].split("~")[1].toLowerCase()=="r"&&aN=="r")if(c[b].split("~")[0].replace(" ","").
+toLowerCase()==a.SectorDetails[a.SectorDetails.length-1].ArrivalAirportName.replace(/ /g,"").toLowerCase())bh=1}else if(
+c[b].split("~")[1].toLowerCase()=="o"){if(c[b].split("~")[0].replace(" ","").toLowerCase()==a.SectorDetails[a.
+SectorDetails.length-1].ArrivalAirportName.replace(/ /g,"").toLowerCase())bh=1}else if(c[b].split("~")[1].toLowerCase()
+=="r")if(c[b].split("~")[0].replace(" ","").toLowerCase()==a.ReturnFlight.SectorDetails[a.ReturnFlight.SectorDetails.
+length-1].ArrivalAirportName.replace(/ /g,"").toLowerCase())bh=1}else if(c[b].replace(" ","").toLowerCase()==a.
+SectorDetails[a.SectorDetails.length-1].ArrivalAirportName.replace(/ /g,"").toLowerCase())bh=1;bi=0;var f=bP.split("|");
+for(var b=0;b<f.length;b++)for(var g=0;g<a.SectorDetails.length-1;g++)if(travelType=="D"&&SearchType=="R"){if(f[b].split
+("~")[0]!=""&&f[b].split("~")[1].toLowerCase()=="o"&&aN=="o"){if(f[b].split("~")[0].replace(" ","").toLowerCase()==a.
+SectorDetails[g].ArrivalAirportName.replace(/ /g,"").toLowerCase()){bi=1;break}}else if(f[b].split("~")[0]!=""&&f[b].
+split("~")[1].toLowerCase()=="r"&&aN=="r")if(f[b].split("~")[0].replace(" ","").toLowerCase()==a.SectorDetails[g].
+ArrivalAirportName.replace(/ /g,"").toLowerCase()){bi=1;break}}else if(f[b].replace(" ","").toLowerCase()==a.
+SectorDetails[g].ArrivalAirportName.replace(/ /g,"").toLowerCase())bi=1;if(travelType=="I"&&SearchType=="R")if(bi==0)
+for(var b=0;b<f.length;b++)for(var g=0;g<a.ReturnFlight.SectorDetails.length-1;g++)if(f[b].replace(" ","").toLowerCase()
+==a.ReturnFlight.SectorDetails[g].ArrivalAirportName.replace(/ /g,"").toLowerCase())bi=1;if(bI==0&&a.SectorDetails.
+length==1||bN==bI)bi=1}else{bn=1;bh=1;bi=1}if(travelType=="I"&&SearchType=="R")bl=parseFloat(getTimes(a.ReturnFlight.
+DepartureDateTime,"T").replace(":","."));bm=parseFloat(getTimes(a.DepartureDateTime,"T").replace(":","."));if($(
+"#chkMorning"+u).is(":checked")&&(bm>5&&bm<=12)){bz=1;bs=true}else bz=0;if($("#chkMidday"+u).is(":checked")&&(bm>12&&bm
+<=18)){bx=1;bs=true}else bx=0;if($("#chkAfternoon"+u).is(":checked")&&(bm>18&&bm<=24)){bp=1;bs=true}else bp=0;if($(
+"#chkEvening"+u).is(":checked")&&bm<=5){bC=1;bs=true}else bC=0;if(travelType=="I"&&SearchType=="R"){if($("#chkMorningr")
+.is(":checked")&&(bl>5&&bl<=12)&&bs)bz=1;else bz=0;if($("#chkMiddayr").is(":checked")&&(bl>12&&bl<=18)&&bs)bx=1;else bx=
+0;if($("#chkAfternoonr").is(":checked")&&(bl>18&&bl<=24)&&bs)bp=1;else bp=0;if($("#chkEveningr").is(":checked")&&bl<=5&&
+bs)bC=1;else bC=0;FilterArray.departTimings[1].PrevMorn=$("#chkMorningr").is(":checked");FilterArray.departTimings[1].
+PrevAftrnoon=$("#chkMiddayr").is(":checked");FilterArray.departTimings[1].PrevNight=$("#chkAfternoonr").is(":checked");
+FilterArray.departTimings[1].PrevModNight=$("#chkEveningr").is(":checked")}if(travelType=="I"&&SearchType=="R")bj=
+parseFloat(getTimes(a.ReturnFlight.ArrivalDateTime,"T").replace(":","."));bk=parseFloat(getTimes(a.ArrivalDateTime,"T").
+replace(":","."));if($("#chkMorningArrival"+u).is(":checked")&&(bk>5&&bk<=12)){by=1;br=true}else by=0;if($(
+"#chkMiddayArrival"+u).is(":checked")&&(bk>12&&bk<=18)){bw=1;br=true}else bw=0;if($("#chkAfternoonArrival"+u).is(
+":checked")&&(bk>18&&bk<=24)){bo=1;br=true}else bo=0;if($("#chkEveningArrival"+u).is(":checked")&&bk<=5){bA=1;br=true}
+else bA=0;if(travelType=="I"&&SearchType=="R"){if($("#chkMorningArrivalr").is(":checked")&&(bj>5&&bj<=12)&&br)by=1;else 
+by=0;if($("#chkMiddayArrivalr").is(":checked")&&(bj>12&&bj<=18)&&br)bw=1;else bw=0;if($("#chkAfternoonArrivalr").is(
+":checked")&&(bj>18&&bj<=24)&&br)bo=1;else bo=0;if($("#chkEveningArrivalr").is(":checked")&&bj<=5&&br)bA=1;else bA=0;
+FilterArray.arrivalTimings[1].PrevMorn=$("#chkMorningArrivalr").is(":checked");FilterArray.arrivalTimings[1].
+PrevAftrnoon=$("#chkMiddayArrivalr").is(":checked");FilterArray.arrivalTimings[1].PrevNight=$("#chkAfternoonArrivalr").
+is(":checked");FilterArray.arrivalTimings[1].PrevModNight=$("#chkEveningArrivalr").is(":checked")}FilterArray.
+departTimings[ad].PrevMorn=$("#chkMorning"+u).is(":checked");FilterArray.departTimings[ad].PrevAftrnoon=$("#chkMidday"+u
+).is(":checked");FilterArray.departTimings[ad].PrevNight=$("#chkAfternoon"+u).is(":checked");FilterArray.departTimings[
+ad].PrevModNight=$("#chkEvening"+u).is(":checked");FilterArray.arrivalTimings[ad].PrevMorn=$("#chkMorningArrival"+u).is(
+":checked");FilterArray.arrivalTimings[ad].PrevAftrnoon=$("#chkMiddayArrival"+u).is(":checked");FilterArray.
+arrivalTimings[ad].PrevNight=$("#chkAfternoonArrival"+u).is(":checked");FilterArray.arrivalTimings[ad].PrevModNight=$(
+"#chkEveningArrival"+u).is(":checked");if(travelType=="D"&&SearchType!="R"||travelType=="I"){if($("#chkNonStop").is(
+":checked")&&a.NoOfStops==0&&a.NoOfHoppings==0||$("#chkOneStop").is(":checked")&&a.NoOfStops==1&&a.NoOfHoppings==0||$(
+"#chkOneStop").is(":checked")&&a.NoOfStops==0&&a.NoOfHoppings==1||$("#chkTwoStop").is(":checked")&&a.NoOfStops==2&&a.
+NoOfHoppings==0||$("#chkTwoStop").is(":checked")&&a.NoOfStops==0&&a.NoOfHoppings==2||$("#chkTwoStop").is(":checked")&&a.
+NoOfStops==1&&a.NoOfHoppings==1||$("#chkTwoStop").is(":checked")&&a.NoOfStops==2&&a.NoOfHoppings>0||$("#chkTwoStop").is(
+":checked")&&a.NoOfStops>2){bF=1;bB=true}else bF=0;if(travelType=="I"&&SearchType=="R")if(($("#chkNonStopr").is(
+":checked")&&a.ReturnFlight.NoOfStops==0&&a.ReturnFlight.NoOfHoppings==0||$("#chkOneStopr").is(":checked")&&a.
+ReturnFlight.NoOfStops==1&&a.ReturnFlight.NoOfHoppings==0||$("#chkOneStopr").is(":checked")&&a.ReturnFlight.NoOfStops==0
+&&a.ReturnFlight.NoOfHoppings==1||$("#chkTwoStopr").is(":checked")&&a.ReturnFlight.NoOfStops==2&&a.ReturnFlight.
+NoOfHoppings==0||$("#chkTwoStopr").is(":checked")&&a.ReturnFlight.NoOfStops==0&&a.ReturnFlight.NoOfHoppings==2||$(
+"#chkTwoStopr").is(":checked")&&a.ReturnFlight.NoOfStops==1&&a.ReturnFlight.NoOfHoppings==1||$("#chkTwoStopr").is(
+":checked")&&a.ReturnFlight.NoOfStops==2&&a.ReturnFlight.NoOfHoppings>0||$("#chkTwoStopr").is(":checked")&&a.
+ReturnFlight.NoOfStops>2)&&bB)bF=1;else bF=0}else if($("#chkNonStop"+u).is(":checked")&&a.NoOfStops==0&&a.NoOfHoppings==
+0||$("#chkOneStop"+u).is(":checked")&&a.NoOfStops==1&&a.NoOfHoppings==0||$("#chkOneStop"+u).is(":checked")&&a.NoOfStops
+==0&&a.NoOfHoppings==1||$("#chkTwoStop"+u).is(":checked")&&a.NoOfStops==2&&a.NoOfHoppings==0||$("#chkTwoStop"+u).is(
+":checked")&&a.NoOfStops==0&&a.NoOfHoppings==2||$("#chkTwoStop"+u).is(":checked")&&a.NoOfStops==1&&a.NoOfHoppings==1||$(
+"#chkTwoStop"+u).is(":checked")&&a.NoOfStops==2&&a.NoOfHoppings>0||$("#chkTwoStop"+u).is(":checked")&&a.NoOfStops>2)bF=1
+;else bF=0;FilterArray.stops[ad].PrevNonStp=$("#chkNonStop"+u).is(":checked");FilterArray.stops[ad].PrevOneStp=$(
+"#chkOneStop"+u).is(":checked");FilterArray.stops[ad].PrevTwoStp=$("#chkTwoStop"+u).is(":checked");if($("#chkRefund").is
+(":checked")&&a.FareType=="Refundable"||$("#chkNoRefund").is(":checked")&&a.FareType=="Non Refundable")bu=1;else bu=0;
+FilterArray.faretype[0].PrevRefund=$("#chkRefund").is(":checked");FilterArray.faretype[0].PrevNonRefund=$("#chkNoRefund"
+).is(":checked");if(bz==1||bx==1||bp==1||bC==1)bH=1;else bH=0;if(by==1||bw==1||bo==1||bA==1)bG=1;else bG=0;if(u=="o"){
+curMinFare=$("#slider-rangeo").slider("values",0);curMaxFare=$("#slider-rangeo").slider("values",1)}else{curMinFare=$(
+"#slider-ranger").slider("values",0);curMaxFare=$("#slider-ranger").slider("values",1)}FilterArray.Farescale[ad].
+PrevMinFare=curMinFare;FilterArray.Farescale[ad].PrevMaxFare=curMaxFare;bJ=SearchType=="R"&&travelType=="I"?a.NetFare+a.
+ReturnFlight.NetFare:a.NetFare;if(a6&&travelType=="D"){if(u=="o"){curMinLayOver=$("#slider-layovero").slider("values",0)
+;curMaxLayOver=$("#slider-layovero").slider("values",1)}else{curMinLayOver=$("#slider-layoverr").slider("values",0);
+curMaxLayOver=$("#slider-layoverr").slider("values",1)}bK=a.JourneyInMinutes;FilterArray.LayoverTime[ad].PrevMinLayover=
+curMinLayOver;FilterArray.LayoverTime[ad].PrevMaxLayover=curMaxLayOver}if(a6&&travelType=="D")if(bv==1&&bH==1&&bF==1&&bu
+==1&&bJ>=curMinFare&&bJ<=curMaxFare&&bG==1&&bK>=curMinLayOver&&bK<=curMaxLayOver&&bn==1&&bh==1&&bi==1){a.Visible=true;a.
+IsAppend=true;filtercount++}else{a.Visible=false;a.IsAppend=false}else if(bv==1&&bH==1&&bF==1&&bu==1&&bJ>=curMinFare&&bJ
+<=curMaxFare&&bG==1&&bn==1&&bh==1&&bi==1){a.Visible=true;a.IsAppend=true;filtercount++}else{a.Visible=false;a.IsAppend=
+false}});offset=0;BindFlightCount()}var stopShowing=false;function DisplayStopsRT(l,r,g){var b,i="";if(stopShowing==
+false){stopShowing=true;var q=r+l,c="",e=$("#stopsdetailmodel"),k=0,j=0;if(document.addEventListener){k=$(g.target).
+offset().top-$(window).scrollTop();j=$(g.target).offset().left}else{k=g.clientY;j=g.clientX}anchor="#"+q;var h="";if(l==
+"o"){b=objowflight.SectorDetails;h=objowflight.FareType}else{b=objrtflight.SectorDetails;h=objrtflight.FareType}if(b[a].
+AirlineCode=="G9"&&b[a].FlightNo.indexOf("G9")!=-1)i=b[a].FlightNo.replace("G9","");else i=b[a].FlightNo;for(var a=0;a<b
+.length;a++){c=c+'<div class="full-div flt-lft"><div class="spl-flgt-open"><div class="flt-lft"><img src="'+imgPath+b[a]
+.LogoPath+'" alt=""></div><div class="clear"></div><div class="spl-col">'+b[a].AirlineName+
+'</div><div class="flt-lft eco-spl">'+b[a].AirlineCode+" "+i+" | ";var f="";if(b[a].CabinClass=="F")f="First Class";else
+ if(b[a].CabinClass=="B")f="Business";else if(b[a].CabinClass=="PE")f="Premium Economy";else f="Economy";c=c+f+
+'</div></div><div class="bk-open-spl"><div class="spl-flgt-main"><div class="spl-left"><div class="spl">'+b[a].From+" ["
++b[a].DepartureAirportCode+']</div><div class="dt-spl">';c=c+getTimes(b[a].DepartureDateTime,"T")+" | "+getDatesIN(b[a].
+DepartureDateTime)+"</div><div>"+b[a].DepTerminal.replace('"',"")+
+'</div></div><div class="spl-open"><div class="display-new time-icon open-ma"></div><br>'+findTimeDiff(b[a].
+DepartureDateTime,b[a].ArrivalDateTime,"T").replace("."," Hr. ")+' M. </div><div class="spl-right"><div class="spl">';c=
+c+b[a].To+" ["+b[a].ArrivalAirportCode+']</div><div class="dt-spl">'+getTimes(b[a].ArrivalDateTime,"T")+" | "+getDatesIN
+(b[a].ArrivalDateTime,"T")+"</div><div>"+b[a].ArrTerminal.replace('"',"")+"</div></div></div></div></div>";if(b[a].
+HoppingDetails!=null){c=c+'<div class="hope-flt"><strong>via ';for(var d=0;d<b[a].HoppingDetails.length;d++)if(b[a].
+HoppingDetails[d].ArrivalAirportCode!=null&&b[a].HoppingDetails[d].ArrivalAirportCode!=""){c=c+b[a].HoppingDetails[d].
+ArrivalCity+" ["+b[a].HoppingDetails[d].ArrivalAirportCode+"]";if(b[a].HoppingDetails[d].ArrivalDateTime!=null&&b[a].
+HoppingDetails[d].ArrivalDateTime!="")c=c+"  arrival at "+getTimes(b[a].HoppingDetails[d].ArrivalDateTime,"T")+
+" and departure at "+getTimes(b[a].HoppingDetails[d].DepartureDateTime,"T");if(d!=b[a].HoppingDetails.length-1)c=c+
+"</br>"}c=c+" </strong></div>"}c+="<div ";var n="&nbsp;";if(a<b.length-1){n=findTimeDiff(b[a].ArrivalDateTime,b[a+1].
+DepartureDateTime,"T").replace("."," Hr. ")+".";c+='class="layover-bt"><p>Layover '+n+"</p>"}else c+=">";if(a==0){c+=
+'<div class="sct-box-spl">';if(b[a].ChannelCode.toUpperCase()!="LV")if(h=="Refundable")if($("#RSFType").val()!=undefined
+)if($("#RSFType").val()==1&&b[a].AirlineCode=="SG")c+=
+'<div class="display-new refund cmn-marlft" title="^^<Refundable Once flown onward sector return is not cancellable>"></div>'
+;else c+='<div class="display-new refund cmn-marlft" title="^^<Refundable>"></div>';else c+=
+'<div class="display-new refund cmn-marlft" title="^^<Refundable>"></div>';else if($("#RSFType").val()!=undefined)if($(
+"#RSFType").val()==1&&b[a].AirlineCode=="SG")c+=
+'<div class="display-new non-refund cmn-marlft" title="^^<Non Refundable Once flown onward sector return is not cancellable>"></div>'
+;else c+='<div class="display-new non-refund cmn-marlft" title="^^<Non Refundable>"></div>';else c+=
+'<div class="display-new non-refund cmn-marlft" title="^^<Non Refundable>"></div>';if(a<b.length-1){var m=findTimeDiff(b
+[a].ArrivalDateTime,b[a+1].DepartureDateTime,"T");if(m.split(".").length>0){var p=m.split(".")[0];if(parseInt(p)<2)c+=
+'<div class="display-new short-layover" title="^^<Short&nbsp;Layover>"></div>';else c+=
+'<div class="display-new long-layover" title="^^<Long&nbsp;Layover>"></div>'}}if(parseInt(b[a].DepartureDateTime.split(
+"T")[1].split(":")[0])>18)c+='<div class="display-new night-flight" title="^^<Night&nbsp;Flight>"></div>'}c+=
+"</div></div>"}e.html(c);e.css("height","auto");var s,o=k-(e.height()+25);e.css("top",o+"px");e.css("left",j+2+"px");e.
+css("position","fixed");e.css("display","block");e.css("width","470px");$("#stopsdetailmodel").stop(true,false).fadeIn(
+600);$("<div/>").css({width:$("body").width(),height:$("#pagewrap").height()}).appendTo("body").attr("id","overlay").
+click(function(){$("#stopsdetailmodel").css("display","none");$(this).remove();stopShowing=false})}else{$(
+"#stopsdetailmodel").css("display","none");$("#overlay").remove();stopShowing=false}}function flightName(b,a,c){a=
+parseInt(a);if(c=="IT"&&(a<=7999&&a>=2000))b="Kingfisher Red";else if(c=="9W")b="Jet Airways";else if(c=="S2")b=
+"Jet Konnect";return b}function propercaseAirName(a){if(a.length<5)return a;var c="",d=1;for(var b=0;b<a.length;b++){c=c
++(d==1?a.charAt(b).toUpperCase():a.charAt(b).toLowerCase());d=a.charAt(b)==" "?1:0}return c}function airlinematrix(){
+this.airlinecode="";this.airlinename="";this.airlineimage="";this.minFareMorn=0;this.minFareMid=0;this.minFareAfter=0;
+this.minFareEven=0;this.noOfStops=""}function addmatrix(a){var b=new airlinematrix({}),c="";curTime=getTimes(a.
+DepartureDateTime,"T").replace(":",".");b.airlinename=a.AirlineName;b.airlineimage=imgPath+a.LogoPath;b.airlinecode=a.
+AirlineCode;b.noOfStops=parseInt(a.NoOfStops)+parseInt(a.NoOfHoppings);if(curTime>5&&curTime<=12)b.minFareMorn=
+SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare;if(curTime>12&&curTime<=18)b.minFareMid=
+SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare;if(curTime>18&&curTime<=24)b.minFareAfter=
+SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare;if(curTime<=5)b.minFareEven=SearchType=="R"
+&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare;airlinematrixlist[airlineCount]=b;airlineCount++}function 
+updatematrix(b,a){var c=0;c=getTimes(a.DepartureDateTime,"T").replace(":",".");if(c>5&&c<=12){minFareMorn=parseInt(b.
+minFareMorn,10);if(minFareMorn==0){minFareMorn=SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.
+NetFare;b.minFareMorn=minFareMorn}else{minFareMorn=(SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.
+NetFare)<minFareMorn?SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare:b.minFareMorn;b.
+minFareMorn=minFareMorn}}else minFareMorn=parseInt(b.minFareMorn,10);if(c>12&&c<=18){minFareMid=parseInt(b.minFareMid,10
+);if(minFareMid==0){minFareMid=SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare;b.minFareMid=
+minFareMid}else{minFareMid=(SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare)<minFareMid?
+SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare:b.minFareMid;b.minFareMid=minFareMid}}else 
+minFareMid=parseInt(b.minFareMid,10);if(c>18&&c<=24){minFareAfter=parseInt(b.minFareAfter,10);if(minFareAfter==0){
+minFareAfter=SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare;b.minFareAfter=minFareAfter}
+else{minFareAfter=(SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare)<minFareAfter?SearchType
+=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare:b.minFareAfter;b.minFareAfter=minFareAfter}}else 
+minFareAfter=parseInt(b.minFareAfter,10);if(c<=5){minFareEven=parseInt(b.minFareEven,10);if(minFareEven==0){minFareEven=
+SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare;b.minFareEven=minFareEven}else{minFareEven=(
+SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare)<minFareEven?SearchType=="R"&&travelType==
+"I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare:b.minFareEven;b.minFareEven=minFareEven}}else minFareEven=parseInt(b.
+minFareEven,10)}function matrixcreation(a){var d="",j="",i=[],e="";for(var b=0;b<a.length;b++){var f=false;fltName=
+flightName(propercaseAirName(a[b].AirlineName));GetFlightCount(a[b]);CreateNearByFilterValues(a[b]);d=parseInt(a[b].
+NoOfStops)+parseInt(a[b].NoOfHoppings);e=fltName+"-"+d;if(sellist==""){sellist=fltName+"-"+d+"|";addmatrix(a[0])}else{
+if(sellist.indexOf(e)==-1){sellist=sellist+fltName+"-"+d+"|";f=true}if(f==true)addmatrix(a[b]);else for(var c=0;c<
+airlinematrixlist.length;c++){var g=flightName(propercaseAirName(airlinematrixlist[c].airlinename))+"-"+
+airlinematrixlist[c].noOfStops;if(g==e){var h=airlinematrixlist[c];updatematrix(h,a[b])}}}}}function CreateMatrixHtml(c,
+g){var a="",h="all";for(var b=0;b<c.length;b++)if(c[b].airlinecode=="9W"&&c[b].airlinename=="Jet Konnect")c[b].
+airlinecode="S2";else if(c[b].airlinecode=="S2"&&c[b].airlinename=="Jet Airways")c[b].airlinecode="9W";a+=
+'<div id="arle-btn" class="arle-matrix bor-non" onclick="ShowAirlineMatrixDiv('+true+')">';a+=
+'<div id="arle-icon" class="display-new arle-img" style="background-position: -69px -522px; height: 10px; margin-top: 5px;"></div>'
+;a+='<div class="flt-lft" >Airline Matrix</div>';a+="</div>";a+=
+'<div class="flt-lft metrix-stopbtn-box metpanel" id="divmatrix">';a+='<div class="metrix-headbtn-area">';a+=
+'<div class="stop-details"><div class="flt-lft">Stop Details</div> <span class="display-new stop-arrow"></span></div>';a
++=
+'<div class="metrix-button"> <a href="javascript:void(0);" id="matrixall" name="matrixstop" class="selected"  onclick="MatrixStopClick(\'all\');">All-Stops</a> </div>'
+;a+=
+'<div class="metrix-button"> <a href="javascript:void(0);" id="matrixnon" name="matrixstop" onclick="MatrixStopClick('+0
++')">Non-Stop</a> </div>';a+=
+'<div class="metrix-button"> <a href="javascript:void(0);" id="matrixone" name="matrixstop" onclick="MatrixStopClick('+1
++')">1-Stop</a> </div>';a+=
+'<div class="metrix-button"> <a href="javascript:void(0);" id="matrixtwo" name="matrixstop" onclick="MatrixStopClick('+2
++')">2-Stop</a> </div>';a+=
+'<div class="show-all"><a href="javascript:void(0);" onclick="SelectAll();" >Show all flights</a></div>';a+="</div>";a+=
+'<div class="metrix-area">';a+='<div class="metrix-time-head flt-lft">';a+='<div class="metrix-timehead-box">';a+=
+'<div class="jcarousel-control-prev"></div>';a+='<div class="metrix-tim-head flt-lft">Time Span</div>';a+=
+'<div class="metrix-tim-head-arrow display-new"></div>';a+="</div>";a+=
+'<div class="metrix-time-span flt-lft" onclick="selectFilterOneTime(\'chkMorningo\');" onMouseOver="highlight(\'mrn\',true)" onMouseOut="highlight(\'mrn\',false)">Morning</div>'
+;a+=
+'<div class="metrix-time-span flt-lft" onclick="selectFilterOneTime(\'chkMiddayo\');"  onMouseOver="highlight(\'mid\',true)" onMouseOut="highlight(\'mid\',false)">After Noon</div>'
+;a+=
+'<div class="metrix-time-span flt-lft" onclick="selectFilterOneTime(\'chkAfternoono\');"  onMouseOver="highlight(\'mnr\',true)" onMouseOut="highlight(\'mnr\',false)">Night</div>'
+;a+=
+'<div class="metrix-time-span flt-lft" onclick="selectFilterOneTime(\'chkEveningo\');"  onMouseOver="highlight(\'mng\',true)" onMouseOut="highlight(\'mng\',false)">Midnight</div>'
+;a+="</div>";a+='<div class="metrix-slider">';a+='<div class="j-carousel" id="fltmetrix">';a+="<ul >";for(var b=0;b<c.
+length;b++)if(g=="all"){var f=false,e=airlinename.split(",");for(var d=0;d<e.length;d++)if(e[d]==c[b].airlinecode)f=true
+;if(f==false)strInnerDiv+=CreateMatrixChildAll(c[b].airlinecode)}else if(g==c[b].noOfStops)strInnerDiv+=
+CreateMatrixChild(c,b);else if(strInnerDiv==""&&b==c.length-1)strInnerDiv+=CreateMatrixChildBlank();a+=strInnerDiv;a+=
+"</ul>";a+="</div>";a+='<div class="jcarousel-control-next"></div>';a+="</div>";a+="</div>";a+="</div>";a+=" </div>";$(
+"#divairlinematrix").html(a)}function CreateMatrixChildBlank(){var a="";a+=" <li>";a+="<div >";a+="<div >";a+=
+"<div ></div>";a+="<div ></div>";a+="<div ></div>";a+="<div ></div>";a+="<div ></div>";a+="<div ></div>";a+="</div>";a+=
+"</div>";a+="</li>";return a}function CreateMatrixChild(b,a){var g=parseInt(b[a].minFareMorn)>0?
+"<div class='metrix-fare mrn'  onclick=SelectFlightandtime('chkMorningo','"+replaceAll(b[a].airlinename.toLowerCase(),
+" ","")+"');>"+b[a].minFareMorn+"</div>":"<div class='metrix-fare mrn' style='cursor:default'>.......</div>",f=parseInt(
+b[a].minFareMid)>0?"<div class='metrix-fare mid' onclick=SelectFlightandtime('chkMiddayo','"+replaceAll(b[a].airlinename
+.toLowerCase()," ","")+"');>"+b[a].minFareMid+"</div>":
+"<div class='metrix-fare mid' style='cursor:default'>.......</div>",d=parseInt(b[a].minFareAfter)>0?
+"<div class='metrix-fare mnr' onclick=SelectFlightandtime('chkAfternoono','"+replaceAll(b[a].airlinename.toLowerCase(),
+" ","")+"');>"+b[a].minFareAfter+"</div>":"<div class='metrix-fare mnr' style='cursor:default'>.......</div>",e=parseInt
+(b[a].minFareEven)>0?"<div class='metrix-fare mng' onclick=SelectFlightandtime('chkEveningo','"+replaceAll(b[a].
+airlinename.toLowerCase()," ","")+"');>"+b[a].minFareEven+"</div>":
+"<div class='metrix-fare mng' style='cursor:default'>.......</div>",c="";c+=" <li>";c+=
+'<div class="metrix-item-box flt-lft">';c+='<div class="metrix-item flt-lft">';c+=
+"<div class='metrix-airlinelogo'> <img src="+b[a].airlineimage+
+" alt='image' width='70' height='30' onclick=selectFilterOneFlight('"+replaceAll(b[a].airlinename.toLowerCase()," ","")+
+"','true'); /></div>";c+="<div class='metrix-airlinename'  "+""+"onclick=selectFilterOneFlight('"+replaceAll(b[a].
+airlinename.toLowerCase()," ","")+"','true');>"+b[a].airlinename+"</div>";c+=g;c+=f;c+=d;c+=e;c+="</div>";c+="</div>";c
++="</li>";return c}function ShowAirlineMatrixDiv(b){var a=".metrix-stopbtn-box";if(prevstatus!=null&&b==true)
+arle_click_flag=prevstatus;if(arle_click_flag==false){$(a).css({display:"block"});load_airline_matrix_animation();if(b==
+"false")$(a).css({height:220+"px"});else{if(SectorType!=null&&SearchType!=null&&(SectorType!="D"||SearchType!="R")&&$(a)
+[0]!=null)$(a).stop(true,false).animate({height:$(a)[0].scrollHeight+"px"},600,"easeInOutCubic",function(){
+arle_click_flag=true});prevstatus=true}$("#arle-icon").css({"background-position":"-80px -522px",height:"5px",marginTop:
+"7px"});if(onwardcached.length==0)$("#divmatrix").css("display","none")}else if(arle_click_flag==true)$(a).stop(true,
+false).animate({height:"0px"},600,"easeInOutCubic",function(){arle_click_flag=false;prevstatus=false;$(a).css({display:
+"none"});$("#arle-icon").css({"background-position":"-69px -522px",height:"10px",marginTop:"5px"})})}function 
+displayMatrix(c,b){var a=$(".j-carousel ul").children().length;strInnerDiv="";airlinename="";if(b!=true&&a!=0)
+arle_click_flag=false;if(a!=0)load_airline_matrix_animation();CreateMatrixHtml(airlinematrixlist,c)}function 
+MatrixStopClick(a){strInnerDiv="";airlinename="";displayMatrix(a,true);arle_click_flag=false;ShowAirlineMatrixDiv(
+"false");SelectOneStop(a,"")}function GetFlightCount(a){if(tmp.indexOf(fltName+"|")==-1){minFare=(SearchType=="R"&&
+travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare)<minFare?SearchType=="R"&&travelType=="I"?a.NetFare+a.
+ReturnFlight.NetFare:a.NetFare:minFare;maxFare=(SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.
+NetFare)>maxFare?SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare:maxFare;tmp=tmp+fltName+"|"
+;fltCount[count]=1;count++}else{minFare=(SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare)<
+minFare?SearchType=="R"&&travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare:minFare;maxFare=(SearchType=="R"&&
+travelType=="I"?a.NetFare+a.ReturnFlight.NetFare:a.NetFare)>maxFare?SearchType=="R"&&travelType=="I"?a.NetFare+a.
+ReturnFlight.NetFare:a.NetFare:maxFare;for(var b=0;b<tmp.split("|").length;b++)if(fltName==tmp.split("|")[b])fltCount[b]
+=parseInt(fltCount[b],10)+1}}function CreateNearByFilterValues(a){DeptAirports=DeptAirports.indexOf(a.SectorDetails[0].
+DepartureAirportName+"~o"+"|")!=-1?DeptAirports:DeptAirports+a.SectorDetails[0].DepartureAirportName+"~o"+"|";
+ArrAirports=ArrAirports.indexOf(a.SectorDetails[a.SectorDetails.length-1].ArrivalAirportName+"~o"+"|")!=-1?ArrAirports:
+ArrAirports+a.SectorDetails[a.SectorDetails.length-1].ArrivalAirportName+"~o"+"|";if(a.SectorDetails.length>1)$.each(a.
+SectorDetails,function(c,b){if(c<a.SectorDetails.length-1)ConAirports=ConAirports.indexOf(b.ArrivalAirportName+"|")!=-1?
+ConAirports:ConAirports+b.ArrivalAirportName+"|"});if(SearchType=="R"&&travelType=="I")if(a.ReturnFlight!=null){
+DeptAirports=DeptAirports.indexOf(a.ReturnFlight.SectorDetails[0].DepartureAirportName+"~r"+"|")!=-1?DeptAirports:
+DeptAirports+a.ReturnFlight.SectorDetails[0].DepartureAirportName+"~r"+"|";ArrAirports=ArrAirports.indexOf(a.
+ReturnFlight.SectorDetails[a.ReturnFlight.SectorDetails.length-1].ArrivalAirportName+"~r"+"|")!=-1?ArrAirports:
+ArrAirports+a.ReturnFlight.SectorDetails[a.ReturnFlight.SectorDetails.length-1].ArrivalAirportName+"~r"+"|";if(a.
+ReturnFlight.SectorDetails.length>1)$.each(a.ReturnFlight.SectorDetails,function(c,b){if(c<a.ReturnFlight.SectorDetails.
+length-1)ConAirports=ConAirports.indexOf(b.ArrivalAirportName+"|")!=-1?ConAirports:ConAirports+b.ArrivalAirportName+"|"}
+)}}function BindFilterAirports(){var a="";if(DeptAirports!=""){var g=DeptAirports.split("|");for(var d=0;d<g.length;d++)
+if(g[d]!=""){a+='<div class="leftitem">';a+='<p class="defaultP">';a+=
+'<input type="checkbox" name="allDeptsAirports" id=chk'+replaceAll(g[d].toLowerCase()," ","")+' checked="true" value="'+
+replaceAll(g[d].toLowerCase()," ","")+'" class="flt-lft"  onclick="ApplyOnwardFilter()" />';a+="</p>";a+=
+'<label for="nostop" style="cursor:pointer" onclick=SelectDepartAirportFilter("'+replaceAll(g[d].toLowerCase()," ","")+
+'","false")  >'+g[d].split("~")[0]+"</label></div>"}$("#tdDeprtAirpts").html(a)}a="";if(ArrAirports!=""){var e=
+ArrAirports.split("|");for(var b=0;b<e.length;b++)if(e[b]!=""){a+='<div class="leftitem">';a+='<p class="defaultP">';a+=
+'<input type="checkbox" name="allArrAirports" id=chk'+replaceAll(e[b].toLowerCase()," ","")+' checked="true" value="'+
+replaceAll(e[b].toLowerCase()," ","")+'" class="flt-lft"  onclick="ApplyOnwardFilter()" />';a+="</p>";a+=
+'<label for="nostop" style="cursor:pointer" onclick=SelectArvlAirportFilter("'+replaceAll(e[b].toLowerCase()," ","")+
+'","false")  >'+e[b].split("~")[0]+"</label></div>"}$("#tdArrAirpts").html(a)}a="";if(ConAirports!=""){var f=ConAirports
+.split("|");for(var c=0;c<f.length;c++)if(f[c]!=""){a+='<div class="leftitem">';a+='<p class="defaultP">';a+=
+'<input type="checkbox" name="allConAirports" id=chk'+replaceAll(f[c].toLowerCase()," ","")+' checked="true" value="'+
+replaceAll(f[c].toLowerCase()," ","")+'" class="flt-lft"  onclick="ApplyOnwardFilter()" />';a+="</p>";a+=
+'<label for="nostop" style="cursor:pointer" onclick=SelectContngAirportFilter("'+replaceAll(f[c].toLowerCase()," ","")+
+'","false")  >'+f[c]+"</label></div>"}$("#tdConAirpts").html(a)}}function SelectDepartAirportFilter(b){$(
+"[name='allDeptsAirports']").each(function(c,a){if(a.id=="chk"+b)$(a).attr("checked",true);else $(a).attr("checked",
+false);$(a).trigger("change")});ApplyOnwardFilter()}function SelectArvlAirportFilter(b){$("[name='allArrAirports']").
+each(function(c,a){if(a.id=="chk"+b)$(a).attr("checked",true);else $(a).attr("checked",false);$(a).trigger("change")});
+ApplyOnwardFilter()}function SelectContngAirportFilter(b){$("[name='allConAirports']").each(function(c,a){if(a.id=="chk"
++b)$(a).attr("checked",true);else $(a).attr("checked",false);$(a).trigger("change")});ApplyOnwardFilter()}function 
+BindFilterAirlines(){var b="";for(var a=0;a<fltCount.length;a++){b+='<div class="leftitem">';b+='<p class="defaultP">';b
++='<input type="checkbox" name="allAirlines" id=chk'+replaceAll(tmp.split("|")[a].toLowerCase()," ","")+
+' checked="true" value="'+replaceAll(tmp.split("|")[a].toLowerCase()," ","")+
+'" class="flt-lft"  onclick="ApplyOnwardFilter()" />';b+="</p>";b+=
+'<label for="nostop" style="cursor:pointer" onclick=selectFilterOneFlight("'+replaceAll(tmp.split("|")[a].toLowerCase(),
+" ","")+'","false")  >'+tmp.split("|")[a]+"("+fltCount[a]+")"+"</label></div>"}$("#tdAirlines").html(b)}function 
+FilterSliderRange(){$("#slider-rangeo").slider({range:true,min:minFare,max:maxFare,values:[minFare,maxFare],slide:
+function(b,a){$("#amount").html("`"+"&nbsp;"+a.values[0]+" - "+"`"+"&nbsp;"+a.values[1]);IsAppliedFilter=false},stop:
+function(a,b){ApplyOnwardFilter()}});curMinFare=$("#slider-rangeo").slider("values",0);curMaxFare=$("#slider-rangeo").
+slider("values",1);if(typeof curMinFare!="undefined"&&typeof curMaxFare!="undefined")$("#amount").html("`"+"&nbsp;"+
+curMinFare+" - "+"`"+"&nbsp;"+curMaxFare)}function ApplyOnwardFilter(){if($("#SearchType").val().toUpperCase()=="O"||
+SectorType.toUpperCase()=="I")IsAppliedFilter=true;if(IsAppliedFilter){var a="";ApplyFilter(onwardcached,"o");display(
+onwardcached,"flightresult",true);BindingCall();if($("#chkNonStop").attr("checked")=="checked"&&$("#chkOneStop").attr(
+"checked")=="checked"&&$("#chkTwoStop").attr("checked")=="checked"){a=true;if($("#divmatrix").css("display")!="none")
+matrixopen=true;else matrixopen=false;if(a==true)matrixfilter("all")}}}function propercase(b){var c="",d=1;for(var a=0;a
+<b.length;a++){c=c+(d==1?b.charAt(a).toUpperCase():b.charAt(a).toLowerCase());d=b.charAt(a)==" "?1:0}return c}function 
+farerules(e,h,g){var b;if(e=="O")$.each(onwardcached,function(c,a){if(a.SrNo==h){b=a;return false}});else if(e=="R")$.
+each(returncached,function(c,a){if(a.SrNo==h){b=a;return false}});var f={Sectors:1,NumberOfAdults:b.AdultCount,
+NumberOfChild:b.ChildCount,NumberOfInfants:b.InfantCount,FromSector:b.SectorDetails[0].DepartureAirportCode,ToSector:b.
+SectorDetails[b.SectorDetails.length-1].ArrivalAirportCode,AirlineCode:b.SectorDetails[0].AirlineCode,ArrivalAirportCode
+:b.SectorDetails[0].ArrivalAirportCode,ChannelCode:b.ChannelCode,DepartureAirportCode:b.SectorDetails[0].
+DepartureAirportCode,DepartureDateTime:b.SectorDetails[0].DepartureDateTime,FareBasisCode:b.SectorDetails[0].
+FareBasisCode,FlightNumber:b.SectorDetails[0].FlightNo,SectorType:travelType,SearchType:SearchType,BookingClass:b.
+SectorDetails[0].BookingClass,MarketingAirlineCode:b.SectorDetails[0].MarketingAirlineCode,OperatingAirlineCode:b.
+SectorDetails[0].OperatingAirlineCode,ValidatingAirlineCode:b.SectorDetails[0].ValidatingAirlineCode,CabinClass:b.
+SectorDetails[0].CabinClass,ArrivalDateTime:b.SectorDetails[0].ArrivalDateTime,AirCraftType:b.SectorDetails[0].
+AircraftCode,FlightId:b.SectorDetails[0].FlightID,Equipment:b.SectorDetails[0].AirEquipType,FareRuleKey:b.SectorDetails[
+0].RPH};$.each(b.SectorDetails,function(c,a){if(c>0){f.Sectors=c+1;f.AirlineCode=f.AirlineCode+"*"+a.AirlineCode;f.
+ArrivalAirportCode=f.ArrivalAirportCode+"*"+a.ArrivalAirportCode;f.DepartureAirportCode=f.DepartureAirportCode+"*"+a.
+DepartureAirportCode;f.DepartureDateTime=f.DepartureDateTime+"*"+a.DepartureDateTime;f.ArrivalDateTime=f.ArrivalDateTime
++"*"+a.ArrivalDateTime;f.FareBasisCode=f.FareBasisCode+"*"+a.FareBasisCode;f.FlightNumber=f.FlightNumber+"*"+a.FlightNo;
+f.BookingClass=f.BookingClass+"*"+a.BookingClass;f.MarketingAirlineCode=f.MarketingAirlineCode+"*"+a.
+MarketingAirlineCode;f.ValidatingAirlineCode=f.ValidatingAirlineCode+"*"+a.ValidatingAirlineCode;f.OperatingAirlineCode=
+f.OperatingAirlineCode+"*"+a.OperatingAirlineCode;f.CabinClass=f.CabinClass+"*"+a.CabinClass;f.AirCraftType=f.
+AirCraftType+"*"+a.AircraftCode;f.FlightId=f.FlightId+"*"+a.FlightID;f.Equipment=f.Equipment+"*"+a.AirEquipType;f.
+FareRuleKey=f.FareRuleKey+"*"+a.RPH}});DisplayFareRules(f,g)}function DisplayFareRules(e,g){$("#divFareRules").dialog({
+autoOpen:false,resizable:false,modal:true,title:"Fare Rules",width:725,draggable:false,position:{my:"center",at:"center"
+,of:window},create:function(a,b){$(a.target).parent().css("position","absolute")}});$("#divFareRules").css("display",
+"block");$("#divFareRules").dialog("open");$("#divFareRules").html(
+"<div class='pymntpop-container' style='text-align:center'><br/><br/>Please wait while we fetch the fare rules from the airline.<br/><br/><img src='"
++imgPath+"/images/AK/v1.0/myaccount/loadingslide.gif' /></div>");$.ajax({url:"/Flight/GetFareRules",type:"POST",data:e,
+success:function(a){if(a!=null){if(a=="Timeout"){window.location="/Utility/SessionTimeout";return false}var b="",d=false
+;if(a.TransactionDetails!=null&&a.TransactionDetails.ResponseStatus==false)if(a.FareRuleDetails!=null&&a.FareRuleDetails
+.length>0){b='<div class="pymntpop-container"><div class="pymntpop-content">';$.each(a.FareRuleDetails,function(h,c){b=b
++'<div class="pymntpop-tbl"> <div class="farerule-head">'+propercase(c.Heading,0)+'</div><div class="farerule-para">'+
+propercase(c.Paragraph,1)+"</div></div>";d=true});b=b+"</div></div>";b=b.replace(/-{2,}/img,"")}if(d==true)$(
+"#divFareRules").html(b);else if(a!="Timeout")$("#divFareRules").html(
+"<div class='pymntpop-container'>No Fare Rules Found</div>")}else $("#divFareRules").html(
+"<div class='fnt size4 bld cntr pdnTOpTrain'>No Fare Rules Found</div>")}})}function prevDateSearch(d){var c=document.
+getElementById("ddltraveltype").value;if($("#Return").val()==$("#Departure").val())if(c=="R")return false;var b="";if(c
+=="O"||c=="")b=document.getElementById("Departure").value;else if(c=="R")b=document.getElementById("Return").value;var a
+=new Date(b.split("/")[2],b.split("/")[1]-1,b.split("/")[0],0,0,0);a.setDate(a.getDate()-1);if(d=="R")document.
+getElementById("roundtrip").checked=true;b=(a.getDate()<10?"0"+a.getDate():a.getDate())+"/"+(a.getMonth()+1<10?"0"+(a.
+getMonth()+1):a.getMonth()+1)+"/"+a.getFullYear();if(c=="O"||c=="")document.getElementById("Departure").value=b;else 
+document.getElementById("Return").value=b;return startSearch()}function nextDateSearch(d){var c=document.getElementById(
+"ddltraveltype").value;if($("#Return").val()==$("#Departure").val())if(c=="O")return false;var b="";if(c=="O"||c=="")b=
+document.getElementById("Departure").value;else if(c=="R")b=document.getElementById("Return").value;var a=new Date(b.
+split("/")[2],b.split("/")[1]-1,b.split("/")[0],0,0,0);a.setDate(a.getDate()+1);if(d=="R"){var e=document.getElementById
+("Return").value;document.getElementById("roundtrip").checked=true;if(b==e)return;else{b=(a.getDate()<10?"0"+a.getDate()
+:a.getDate())+"/"+(a.getMonth()+1<10?"0"+(a.getMonth()+1):a.getMonth()+1)+"/"+a.getFullYear();if(c=="O"||c=="")document.
+getElementById("Departure").value=b;else document.getElementById("Return").value=b;return startSearch()}}if(d=="O"){b=(a
+.getDate()<10?"0"+a.getDate():a.getDate())+"/"+(a.getMonth()+1<10?"0"+(a.getMonth()+1):a.getMonth()+1)+"/"+a.getFullYear
+();if(c=="O"||c=="")document.getElementById("Departure").value=b;else document.getElementById("Return").value=b}
+return startSearch()}function prevDateSearchRnd(){var b=document.getElementById("Return").value,a=new Date(b.split("/")[
+2],b.split("/")[1]-1,b.split("/")[0],0,0,0);a.setDate(a.getDate()-1);b=(a.getDate()<10?"0"+a.getDate():a.getDate())+"/"+
+(a.getMonth()+1<10?"0"+(a.getMonth()+1):a.getMonth()+1)+"/"+a.getFullYear();document.getElementById("Return").value=b;
+document.getElementById("roundtrip").checked=true;return startSearch()}function nextDateSearchRnd(){var b=document.
+getElementById("Return").value,a=new Date(b.split("/")[2],b.split("/")[1]-1,b.split("/")[0],0,0,0);a.setDate(a.getDate()
++1);b=(a.getDate()<10?"0"+a.getDate():a.getDate())+"/"+(a.getMonth()+1<10?"0"+(a.getMonth()+1):a.getMonth()+1)+"/"+a.
+getFullYear();document.getElementById("Return").value=b;document.getElementById("roundtrip").checked=true;
+return startSearch()}function BindFlightCount(){var a=parseInt(offset);$("#totalcount").html(onwardcached.length);$(
+"#fltdspcount").html(a)}var lperc=20;function loaderimage(){if($("#IsMultiCity").val()=="True"){$("#divLoading").css(
+"display","block");$("#progressbar > span").each(function(){$(this).stop(true,false).animate({width:lperc+"%"},1000,
+function(){})});if(lperc<100)lperc+=80/(4*searchcount)}else{$("#divLoading").css("display","block");$(
+"#progressbar > span").each(function(){$(this).stop(true,false).animate({width:lperc+"%"},1000,function(){})});if(lperc<
+100)lperc=lperc+20}}function ShowDivAfterResult(){$("#divfilter").css("display","block");$("#prevnextdiv").css("display"
+,"block");$("#divfltcount").css("display","block");$("#divsort").css("display","block")}function clearfilter(a){if(a==
+"faretype"){$("#chkRefund").attr("checked",true);$("#chkRefund").trigger("change");$("#chkNoRefund").attr("checked",true
+);$("#chkNoRefund").trigger("change")}else if(a=="stop"){if(stopType=="r"&&travelType=="I"&&SearchType=="R"){$(
+"#chkNonStopr").attr("checked",true);$("#chkNonStopr").trigger("change");$("#chkOneStopr").attr("checked",true);$(
+"#chkOneStopr").trigger("change");$("#chkTwoStopr").attr("checked",true);$("#chkTwoStopr").trigger("change")}else{$(
+"#chkNonStop").attr("checked",true);$("#chkNonStop").trigger("change");$("#chkOneStop").attr("checked",true);$(
+"#chkOneStop").trigger("change");$("#chkTwoStop").attr("checked",true);$("#chkTwoStop").trigger("change")}
+MatrixStopClick("all")}else if(a=="farescale")FilterSliderRange();else if(a=="departuretime")if(departureType=="r"&&
+travelType=="I"&&SearchType=="R"){$("#chkMorningr").attr("checked",true);$("#chkMorningr").trigger("change");$(
+"#chkMiddayr").attr("checked",true);$("#chkMiddayr").trigger("change");$("#chkAfternoonr").attr("checked",true);$(
+"#chkAfternoonr").trigger("change");$("#chkEveningr").attr("checked",true);$("#chkEveningr").trigger("change")}else{$(
+"#chkMorningo").attr("checked",true);$("#chkMorningo").trigger("change");$("#chkMiddayo").attr("checked",true);$(
+"#chkMiddayo").trigger("change");$("#chkAfternoono").attr("checked",true);$("#chkAfternoono").trigger("change");$(
+"#chkEveningo").attr("checked",true);$("#chkEveningo").trigger("change")}else if(a=="arrivaltime")if(arrivalType=="r"&&
+travelType=="I"&&SearchType=="R"){$("#chkMorningArrivalr").attr("checked",true);$("#chkMorningArrivalr").trigger(
+"change");$("#chkMiddayArrivalr").attr("checked",true);$("#chkMiddayArrivalr").trigger("change");$(
+"#chkAfternoonArrivalr").attr("checked",true);$("#chkAfternoonArrivalr").trigger("change");$("#chkEveningArrivalr").attr
+("checked",true);$("#chkEveningArrivalr").trigger("change")}else{$("#chkMorningArrivalo").attr("checked",true);$(
+"#chkMorningArrivalo").trigger("change");$("#chkMiddayArrivalo").attr("checked",true);$("#chkMiddayArrivalo").trigger(
+"change");$("#chkAfternoonArrivalo").attr("checked",true);$("#chkAfternoonArrivalo").trigger("change");$(
+"#chkEveningArrivalo").attr("checked",true);$("#chkEveningArrivalo").trigger("change")}else if(a=="airlinename")$(
+"[name='allAirlines']").each(function(c,b){$(b).attr("checked",true);$(b).trigger("change")});else if(a=="deptairpts")$(
+"[name='allDeptsAirports']").each(function(c,b){$(b).attr("checked",true);$(b).trigger("change")});else if(a==
+"arrairpts")$("[name='allArrAirports']").each(function(c,b){$(b).attr("checked",true);$(b).trigger("change")});else if(a
+=="conairpts")$("[name='allConAirports']").each(function(c,b){$(b).attr("checked",true);$(b).trigger("change")});
+ApplyOnwardFilter()}function checkallfiter(){$("#chkRefund").attr("checked",true);$("#chkRefund").trigger("change");$(
+"#chkNoRefund").attr("checked",true);$("#chkNoRefund").trigger("change");$("#chkNonStop").attr("checked",true);$(
+"#chkNonStop").trigger("change");$("#chkOneStop").attr("checked",true);$("#chkOneStop").trigger("change");$(
+"#chkTwoStop").attr("checked",true);$("#chkTwoStop").trigger("change");$("#chkNonStopr").attr("checked",true);$(
+"#chkNonStopr").trigger("change");$("#chkOneStopr").attr("checked",true);$("#chkOneStopr").trigger("change");$(
+"#chkTwoStopr").attr("checked",true);$("#chkTwoStopr").trigger("change");$("#chkMorningo").attr("checked",true);$(
+"#chkMorningo").trigger("change");$("#chkMiddayo").attr("checked",true);$("#chkMiddayo").trigger("change");$(
+"#chkAfternoono").attr("checked",true);$("#chkAfternoono").trigger("change");$("#chkEveningo").attr("checked",true);$(
+"#chkEveningo").trigger("change");$("#chkMorningr").attr("checked",true);$("#chkMorningr").trigger("change");$(
+"#chkMiddayr").attr("checked",true);$("#chkMiddayr").trigger("change");$("#chkAfternoonr").attr("checked",true);$(
+"#chkAfternoonr").trigger("change");$("#chkEveningr").attr("checked",true);$("#chkEveningr").trigger("change");$(
+"[name='allAirlines']").each(function(b,a){$(a).attr("checked",true);$(a).trigger("change")});FilterSliderRange();$(
+"#chkMorningArrivalo").attr("checked",true);$("#chkMorningArrivalo").trigger("change");$("#chkMiddayArrivalo").attr(
+"checked",true);$("#chkMiddayArrivalo").trigger("change");$("#chkAfternoonArrivalo").attr("checked",true);$(
+"#chkAfternoonArrivalo").trigger("change");$("#chkEveningArrivalo").attr("checked",true);$("#chkEveningArrivalo").
+trigger("change");$("#chkMorningArrivalr").attr("checked",true);$("#chkMorningArrivalr").trigger("change");$(
+"#chkMiddayArrivalr").attr("checked",true);$("#chkMiddayArrivalr").trigger("change");$("#chkAfternoonArrivalr").attr(
+"checked",true);$("#chkAfternoonArrivalr").trigger("change");$("#chkEveningArrivalr").attr("checked",true);$(
+"#chkEveningArrivalr").trigger("change");$("[name='allDeptsAirports']").each(function(b,a){$(a).attr("checked",true);$(a
+).trigger("change")});$("[name='allArrAirports']").each(function(b,a){$(a).attr("checked",true);$(a).trigger("change")})
+;$("[name='allConAirports']").each(function(b,a){$(a).attr("checked",true);$(a).trigger("change")})}function SelectAll()
+{checkallfiter();ApplyOnwardFilter();if($(".metrix-stopbtn-box").css("display")=="none"){displayMatrix("all",false);
+arle_click_flag=true;ShowAirlineMatrixDiv()}}function selectFilterOneTime(c){$("[name='chkTime']").each(function(e,b){$(
+b).attr("checked",false);$(b).trigger("change")});$("#"+c).attr("checked",true);$("#"+c).trigger("change");
+ApplyOnwardFilter();if(status!="false"){$("#popupMatrix").css("display","block");var a="";if(offset==0)a=
+'<div class="mtrx-popup"><div class="mtrx-popup-cntnt"><span>No Flight Found ! </span><br /></div></div>';else{if(offset
+==1)a='<div class="mtrx-popup">\t<div class="mtrx-popup-cntnt"><span>'+offset+" Flight Found ! </span><br />";else a=
+'<div class="mtrx-popup">\t<div class="mtrx-popup-cntnt"><span>'+offset+" Flights Found ! </span><br />";a=a+
+'Scroll down to see<br />the flights</div><div class="mtrx-popup-arw"></div></div>'}$("#popupMatrix").html(a);var d=
+".metrix-area",f,g=$(d).position();$("#popupMatrix").css("top","205px");$("#popupMatrix").css("left","40%");$(
+"#popupMatrix").css("position","absolute");$("#popupMatrix").css("width","154px");$("#popupMatrix").css("z-index",
+"999999");$("#popupMatrix").delay(2e3);$("#popupMatrix").fadeOut("slow")}}function SelectFlightandtime(d,c){$(
+"[name='chkTime']").each(function(f,b){$(b).attr("checked",false);$(b).trigger("change")});$("#"+d).attr("checked",true)
+;$("#"+d).trigger("change");$("[name='allAirlines']").each(function(f,b){$(b).attr("checked",false);$(b).trigger(
+"change")});$("#chk"+c).attr("checked",true);$("#chk"+c).trigger("change");ApplyOnwardFilter();$("#popupMatrix").css(
+"display","block");var a="";if(offset==0)a=
+'<div class="mtrx-popup"><div class="mtrx-popup-cntnt"><span>No Flight Found ! </span><br /></div></div>';else{if(offset
+==1)a='<div class="mtrx-popup">\t<div class="mtrx-popup-cntnt"><span>'+offset+" Flight Found ! </span><br />";else a=
+'<div class="mtrx-popup">\t<div class="mtrx-popup-cntnt"><span>'+offset+" Flights Found ! </span><br />";a=a+
+'Scroll down to see<br />the flights</div><div class="mtrx-popup-arw"></div></div>'}$("#popupMatrix").html(a);var e=
+".metrix-area",g,h=$(e).position();$("#popupMatrix").css("top","205px");$("#popupMatrix").css("left","40%");$(
+"#popupMatrix").css("position","absolute");$("#popupMatrix").css("width","154px");$("#popupMatrix").css("z-index",
+"999999");$("#popupMatrix").delay(2e3);$("#popupMatrix").fadeOut("slow")}function selectFilterOneFlight(d,f){var b=$(
+'a.selected[name="matrixstop"]').attr("onclick");if(b!="MatrixStopClick('all');"){b=b.split("(")[1].slice(0,-1);$(
+"[name='chkStop']").each(function(g,c){$(c).attr("checked",false);$(c).trigger("change")})}if(b=="0"){$("#chkNonStop").
+attr("checked",true);$("#chkNonStop").trigger("change")}else if(b=="1"){$("#chkOneStop").attr("checked",true);$(
+"#chkOneStop").trigger("change")}else if(b=="2"){$("#chkTwoStop").attr("checked",true);$("#chkTwoStop").trigger("change"
+)}$("[name='allAirlines']").each(function(g,c){$(c).attr("checked",false);$(c).trigger("change")});$("#chk"+d).attr(
+"checked",true);$("#chk"+d).trigger("change");ApplyOnwardFilter();if(f!="false"){$("#popupMatrix").css("display","block"
+);var a="";if(offset==0)a=
+'<div class="mtrx-popup"><div class="mtrx-popup-cntnt"><span>No Flight Found ! </span><br /></div></div>';else{if(offset
+==1)a='<div class="mtrx-popup">\t<div class="mtrx-popup-cntnt"><span>'+offset+" Flight Found ! </span><br />";else a=
+'<div class="mtrx-popup">\t<div class="mtrx-popup-cntnt"><span>'+offset+" Flights Found ! </span><br />";a=a+
+'Scroll down to see<br />the flights</div><div class="mtrx-popup-arw"></div></div>'}$("#popupMatrix").html(a);var e=
+".metrix-area",h,i=$(e).position();$("#popupMatrix").css("top","205px");$("#popupMatrix").css("left","40%");$(
+"#popupMatrix").css("position","absolute");$("#popupMatrix").css("width","154px");$("#popupMatrix").css("z-index",
+"999999");$("#popupMatrix").delay(2e3);$("#popupMatrix").fadeOut("slow")}}function selectOneFlight(c){$(
+"[name='allAirlines']").each(function(e,b){$(b).attr("checked",false);$(b).trigger("change")});$("#chk"+c).attr(
+"checked",true);$("#chk"+c).trigger("change");ApplyOnwardFilter();$("#popupMatrix").css("display","block");var a="";if(
+offset==0)a='<div class="mtrx-popup"><div class="mtrx-popup-cntnt"><span>No Flight Found ! </span><br /></div></div>';
+else{if(offset==1)a='<div class="mtrx-popup">\t<div class="mtrx-popup-cntnt"><span>'+offset+
+" Flight Found ! </span><br />";else a='<div class="mtrx-popup">\t<div class="mtrx-popup-cntnt"><span>'+offset+
+" Flights Found ! </span><br />";a=a+'Scroll down to see<br />the flights</div><div class="mtrx-popup-arw"></div></div>'
+}$("#popupMatrix").html(a);var d=".metrix-area",f,g=$(d).position();$("#popupMatrix").css("top","205px");$(
+"#popupMatrix").css("left","40%");$("#popupMatrix").css("position","absolute");$("#popupMatrix").css("width","154px");$(
+"#popupMatrix").css("z-index","999999");$("#popupMatrix").delay(2e3);$("#popupMatrix").fadeOut("slow")}function 
+checkboxstyle(){}function selectOneTime(b){if(departureType=="r"&&travelType=="I"&&SearchType=="R")$("[name='chkTimer']"
+).each(function(c,a){$(a).attr("checked",false);$(a).trigger("change")});else $("[name='chkTime']").each(function(c,a){$
+(a).attr("checked",false);$(a).trigger("change")});$("#"+b).attr("checked",true);$("#"+b).trigger("change");
+ApplyOnwardFilter()}function selectArrivalOneTime(b){if(arrivalType=="r"&&travelType=="I"&&SearchType=="R")$(
+"[name='chkTimeArrivalr']").each(function(c,a){$(a).attr("checked",false);$(a).trigger("change")});else $(
+"[name='chkTimeArrival']").each(function(c,a){$(a).attr("checked",false);$(a).trigger("change")});$("#"+b).attr(
+"checked",true);$("#"+b).trigger("change");ApplyOnwardFilter()}function propercase(b,e){var c="",d=1,f=false;for(var a=0
+;a<b.length;a++){if(f)if(b.charAt(a)=="."&&a<b.length-1&&$.isNumeric(b.charAt(a+1)))c=c+b.charAt(a).toLowerCase();else c
+=c+(d==1?b.charAt(a).toUpperCase():e==1&&b.charAt(a)=="."?".<br />":b.charAt(a).toLowerCase());else if(b.charAt(a)+b.
+charAt(a+1)!="..")c=c+(d==1?b.charAt(a).toUpperCase():e==1&&b.charAt(a)=="."?".<br />":b.charAt(a).toLowerCase());d=b.
+charAt(a)==" "?1:0;f=$.isNumeric(b.charAt(a))}return c}function load_airline_matrix_animation(){var b=0;$(
+".j-carousel ul").children().width(function(c,a){b+=a+parseInt($(".metrix-item-box").css("padding-right"))});$(
+".j-carousel ul").width(b);$(".j-carousel ul").css({left:"0"});$(".jcarousel-control-prev").css({opacity:"0.1"});if($(
+".j-carousel ul").width()<$(".j-carousel").width())$(".jcarousel-control-next").css({opacity:"0.1"});else $(
+".jcarousel-control-next").css({opacity:"1"});var d=false;$(".jcarousel-control-next").unbind("click").click(function(){
+b=0;$(".j-carousel ul").children().width(function(f,e){b+=e+parseInt($(".metrix-item-box").css("padding-right"))});$(
+".j-carousel ul").width(b);if(b+parseInt($(".j-carousel ul").css("left"))>$(".j-carousel").width()&&d==false){d=true;$(
+".j-carousel ul").stop(true,true).animate({left:parseInt($(".j-carousel ul").css("left"))-$(".j-carousel").width()+"px"}
+,600,"easeInOutCubic",function(){$(".jcarousel-control-prev").stop(true,true).animate({opacity:"1"},300,"easeInOutCubic"
+);d=false;if(b+parseInt($(".j-carousel ul").css("left"))<$(".j-carousel").width())$(".jcarousel-control-next").stop(true
+,true).animate({opacity:"0.1"},300,"easeInOutCubic")})}});$(".jcarousel-control-prev").unbind("click").click(function(){
+if(-parseInt($(".j-carousel ul").css("left"))>$(".jcarousel").width()&&d==false){d=true;$(".j-carousel ul").stop(true,
+true).animate({left:parseInt($(".j-carousel ul").css("left"))+$(".j-carousel").width()+"px"},600,"easeInOutCubic",
+function(){$(".jcarousel-control-next").stop(true,true).animate({opacity:"1"},300,"easeInOutCubic");d=false;if(-parseInt
+($(".j-carousel ul").css("left"))<$(".j-carousel").width())$(".jcarousel-control-prev").stop(true,true).animate({opacity
+:"0.1"},300,"easeInOutCubic")})}})}function TopSort(a){switch(a){case"NetFare*false":Applysort(InitalFlightResult,
+"Weightage,NetFare,JourneyInMinutes,DepartureDateTime,ArrivalDateTime",false,"","flightresult");break;case"NetFare*true"
+:Applysort(InitalFlightResult,"Weightage,NetFare,JourneyInMinutes,DepartureDateTime,ArrivalDateTime",true,"",
+"flightresult");break;case"AirlineName*true":Applysort(InitalFlightResult,
+"Weightage,AirlineName,NetFare,JourneyInMinutes",false,"","flightresult");break;case"DepartureDateTime*false":Applysort(
+InitalFlightResult,"Weightage,DepartureDateTime,NetFare,JourneyInMinutes",false,"","flightresult");break;case
+"ArrivalDateTime*false":Applysort(InitalFlightResult,"Weightage,ArrivalDateTime,NetFare,JourneyInMinutes",false,"",
+"flightresult");break;case"JourneyInMinutes*false":Applysort(InitalFlightResult,
+"Weightage,JourneyInMinutes,NetFare,DepartureDateTime",false,"","flightresult");break}}function TopSortInt(a){switch(a){
+case"JourneyInMinutes*false":Applysort(InitalFlightResult,"Weightage,TotDuration,SortNetFare,DepartureDateTime",false,""
+,"flightresult");break;case"DepartureDateTimeOnwardAsc*false":Applysort(InitalFlightResult,
+"Weightage,DepartureDateTime,SortNetFare,TotDuration",false,"","flightresult");break;case
+"DepartureDateTimeOnwarDesc*false":Applysort(InitalFlightResult,"Weightage,DepartureDateTime,SortNetFare,TotDuration",
+true,"","flightresult");break;case"ArrivalDateTimeOnwardAsc*false":Applysort(InitalFlightResult,
+"Weightage,ArrivalDateTime,SortNetFare,TotDuration",false,"","flightresult");break;case"ArrivalDateTimeOnwarDesc*false":
+Applysort(InitalFlightResult,"Weightage,ArrivalDateTime,SortNetFare,TotDuration",true,"","flightresult");break;case
+"DepartureDateTimeReturnAsc*false":Applysort(InitalFlightResult,
+"Weightage,ReturnDepartureDateTime,SortNetFare,TotDuration",false,"","flightresult");break;case
+"DepartureDateTimeReturnDesc*false":Applysort(InitalFlightResult,
+"Weightage,ReturnDepartureDateTime,SortNetFare,TotDuration",true,"","flightresult");break;case
+"ArrivalDateTimeReturn*false":Applysort(InitalFlightResult,"Weightage,ReturnArrivalDateTime,SortNetFare,TotDuration",
+false,"","flightresult");break;case"ArrivalDateTimeReturnDesc*false":Applysort(InitalFlightResult,
+"Weightage,ReturnArrivalDateTime,SortNetFare,TotDuration",true,"","flightresult");break;case"NetFare*false":Applysort(
+InitalFlightResult,"Weightage,SortNetFare,TotDuration,DepartureDateTime,ArrivalDateTime",false,"","flightresult");break;
+case"NetFare*true":Applysort(InitalFlightResult,"Weightage,SortNetFare,TotDuration,DepartureDateTime,ArrivalDateTime",
+true,"","flightresult");break;case"AirlineName*false":Applysort(InitalFlightResult,
+"Weightage,ZAirlineName,SortNetFare,TotDuration",false,"","flightresult");break}}function SelectOneStop(b,c){if($(
+"#divmatrix").css("display")!="none")matrixopen=true;else matrixopen=false;if(c=="filter")matrixfilter(b);$("#matrixnon"
+).removeClass("selected");$("#matrixone").removeClass("selected");$("#matrixtwo").removeClass("selected");$("#matrixall"
+).removeClass("selected");if(stopType=="r"&&travelType=="I"&&SearchType=="R")$("[name='chkStopr']").each(function(d,a){$
+(a).attr("checked",false);$(a).trigger("change");if(b=="0"&&a.id=="chkNonStopr"){$("#chkNonStopr").attr("checked",true);
+$("#chkNonStopr").trigger("change");$("#matrixnon").addClass("selected")}if(b=="1"&&a.id=="chkOneStopr"){$(
+"#chkOneStopr").attr("checked",true);$("#chkOneStopr").trigger("change");$("#matrixone").addClass("selected")}if(b=="2"
+&&a.id=="chkTwoStopr"){$("#chkTwoStopr").attr("checked",true);$("#chkTwoStopr").trigger("change");$("#matrixtwo").
+addClass("selected")}if(b=="all"){$(a).attr("checked",true);$(a).trigger("change");$("#matrixall").addClass("selected")}
+});else $("[name='chkStop']").each(function(d,a){$(a).attr("checked",false);$(a).trigger("change");if(b=="0"&&a.id==
+"chkNonStop"){$("#chkNonStop").attr("checked",true);$("#chkNonStop").trigger("change");$("#matrixnon").addClass(
+"selected")}if(b=="1"&&a.id=="chkOneStop"){$("#chkOneStop").attr("checked",true);$("#chkOneStop").trigger("change");$(
+"#matrixone").addClass("selected")}if(b=="2"&&a.id=="chkTwoStop"){$("#chkTwoStop").attr("checked",true);$("#chkTwoStop")
+.trigger("change");$("#matrixtwo").addClass("selected")}if(b=="all"){$(a).attr("checked",true);$(a).trigger("change");$(
+"#matrixall").addClass("selected")}});ApplyOnwardFilter()}function SelectOneFareType(a){$("[name='chkfaretype']").each(
+function(c,b){$(b).attr("checked",false);$(b).trigger("change")});$("#"+a).attr("checked",true);$("#"+a).trigger(
+"change");ApplyOnwardFilter()}function CreateMatrixChildAll(o){var g=0,f=0,d=0,e=0,n="",m="",i="",l="",c=0,p="";for(var 
+a=0;a<airlinematrixlist.length;a++)if(o==airlinematrixlist[a].airlinecode){var k=false,j=airlinename.split(",");for(var 
+h=0;h<j.length;h++)if(j[h]==airlinematrixlist[a].airlinecode)k=true;if(k==false)airlinename=airlinename+
+airlinematrixlist[a].airlinecode+",";c=a;if(g==0)g=parseInt(airlinematrixlist[a].minFareMorn);else if(airlinematrixlist[
+a].minFareMorn!=0)g=g<airlinematrixlist[a].minFareMorn?g:airlinematrixlist[a].minFareMorn;if(f==0)f=parseInt(
+airlinematrixlist[a].minFareMid);else if(airlinematrixlist[a].minFareMid!=0)f=f<airlinematrixlist[a].minFareMid?f:
+airlinematrixlist[a].midDayFare;if(d==0)d=parseInt(airlinematrixlist[a].minFareAfter);else if(airlinematrixlist[a].
+minFareAfter!=0)d=d<airlinematrixlist[a].minFareAfter?d:airlinematrixlist[a].minFareAfter;if(e==0)e=parseInt(
+airlinematrixlist[a].minFareEven);else if(airlinematrixlist[a].minFareEven!=0)e=e<airlinematrixlist[a].minFareEven?e:
+airlinematrixlist[a].minFareEven}n=parseInt(g)>0?
+"<div class='metrix-fare mrn'  onclick=SelectFlightandtime('chkMorningo','"+replaceAll(airlinematrixlist[c].airlinename.
+toLowerCase()," ","")+"');>"+g+"</div>":"<div class='metrix-fare mrn' style='cursor:default'>.......</div>";m=parseInt(f
+)>0?"<div class='metrix-fare mid' onclick=SelectFlightandtime('chkMiddayo','"+replaceAll(airlinematrixlist[c].
+airlinename.toLowerCase()," ","")+"');>"+f+"</div>":"<div class='metrix-fare mid' style='cursor:default'>.......</div>";
+i=parseInt(d)>0?"<div class='metrix-fare mnr' onclick=SelectFlightandtime('chkAfternoono','"+replaceAll(
+airlinematrixlist[c].airlinename.toLowerCase()," ","")+"');>"+d+"</div>":
+"<div class='metrix-fare mnr' style='cursor:default'>.......</div>";l=parseInt(e)>0?
+"<div class='metrix-fare mng' onclick=SelectFlightandtime('chkEveningo','"+replaceAll(airlinematrixlist[c].airlinename.
+toLowerCase()," ","")+"');>"+e+"</div>":"<div class='metrix-fare mng' style='cursor:default'>.......</div>";var b="";b+=
+" <li>";b+='<div class="metrix-item-box flt-lft">';b+='<div class="metrix-item flt-lft">';b+=
+'<div class="metrix-airlinelogo"> <img src='+airlinematrixlist[c].airlineimage+
+' alt="image" width="70" height="30" onclick=selectFilterOneFlight("'+replaceAll(airlinematrixlist[c].airlinename.
+toLowerCase()," ","")+'","true") /></div>';b+="<div class='metrix-airlinename'   onclick=selectFilterOneFlight('"+
+replaceAll(airlinematrixlist[c].airlinename.toLowerCase()," ","")+"','true')>"+airlinematrixlist[c].airlinename+"</div>"
+;b+=n;b+=m;b+=i;b+=l;b+="</div>";b+="</div>";b+="</li>";return b}function highlight(a,b){if(b==true)$("."+a).css(
+"background-color","#c9c7c7");else $("."+a).css("background-color","")}function SetIsAppend(){$.each(onwardcached,
+function(b,a){a.IsAppend=true})}function matrixfilter(a){displayMatrix(a,true);if(matrixopen==true){arle_click_flag=
+false;ShowAirlineMatrixDiv("false")}}function PricingFailed(e){isCloseButtonPressed=true;$dialog=$("#pricingFailed");var
+ b="";b="Pricing Failed!! Please try again later";var a="<div class='popup-outer flt-lft'>";a=a+
+"<div class='pp-cntnr flt-lft'>";a=a+"<div class='prv-hd flt-lft'>"+b+"</div>";a=a+"</div></div>";$dialog.html(a);
+$dialog.dialog({modal:true,title:"Pricing failed",height:93,width:485,resizable:false,close:function(c,d){
+closewindowPriceFailed()}})}function closewindowPriceFailed(){isCloseButtonPressed=false;isSelected=false;$dialog=$(
+"#pricingFailed");$dialog.dialog("close");$("#logindet").css("display","block");$("#divbookbtn"+ClickedButtonID).
+removeClass("process");$("#divbookbtn"+ClickedButtonID).addClass("redeem-bt mar-left");isCabinchngInformed=false;
+prcsuccess=false;isAlreadyInformed=false}function resize_searchbox(){$(".tab-disply").stop(true,true).animate({height:$(
+".tab-disply")[0].scrollHeight+$(".mlti-box:eq("+num_of_cities+")").outerHeight()},600,function(){})}function 
+resize_search(){if($(window).innerHeight()>$(".head-main").height()+$(".flight-search").height("auto").height()+$(
+".footer-main").height()&&$(window).innerHeight()>$(".head-main").height()+$(".content-right").height("auto").height()+$
+(".footer-main").height()&&$(".flight-search")[0]){$(".flight-search").css({height:$(document).height()-$(".footer-main"
+).height()-$(".head-main").height()});$(".footer-main").css({position:"absolute",float:"none"})}else{if($(
+".content-right").height("auto").height()<$(".tab-disply").height("auto").height())$(".flight-search").css({height:$(
+".flight-search").height("auto").height()});else $(".flight-search").css({height:$(".content-right").height("auto").
+height()+15});$(".footer-main").css({position:"static",float:"left"})}}function ShowFamilyFare(b){var a=$("#flgt-Fmly");
+$(a).show();var c=$(b).position();if($($(a).offsetParent()).position().top!=$($(b).offsetParent()).position().top){a.css
+("top",c.top+16+$($(b).offsetParent()).position().top+"px");if($($(b).offsetParent()).position().left>$(a).width())a.css
+("left",c.left+$($(b).offsetParent()).position().left-$(a).width()+"px");else a.css("left",c.left+$($(b).offsetParent())
+.position().left+"px")}else{a.css("top",c.top+16+"px");a.css("left",c.left+"px")}}function hideFamilyFare(){$(
+"#flgt-Fmly").hide()}function ShowFamilyFareRT(b){var a=$("#flgt-FmlyRt");$(a).show();var c=$(b).position();if($($(a).
+offsetParent()).position().top!=$($(b).offsetParent()).position().top){a.css("top",c.top+16+$($(b).offsetParent()).
+position().top+"px");if($($(b).offsetParent()).position().left>$(a).width())a.css("left",c.left+$($(b).offsetParent()).
+position().left-$(a).width()+"px");else a.css("left",c.left+$($(b).offsetParent()).position().left+"px")}else{a.css(
+"top",c.top+16+"px");a.css("left",c.left+"px")}}function hideFamilyFareRT(){$("#flgt-FmlyRt").hide()}function 
+ShowFamilyFareMutliCity(c,b){var a=$("#flgt-Fmly");$(a).show();var d=$(c).position();if($($(a).offsetParent()).position(
+).top!=$($(c).offsetParent()).position().top){a.css("top",d.top+16+$($(c).offsetParent()).position().top+"px");if($($(c)
+.offsetParent()).position().left>$(a).width())a.css("left",d.left+$($(c).offsetParent()).position().left-$(a).width()+
+"px");else a.css("left",d.left+$($(c).offsetParent()).position().left+"px")}else{a.css("top",d.top+16+"px");a.css("left"
+,d.left+"px")}var i=new Date("03/03/2016"),f=new Date("03/17/2016"),j=new Date("03/24/2016"),g=new Date("03/25/2016"),k=
+new Date("03/29/2016"),h=new Date("04/13/2016");b=new Date(b);var e="";if(b>=i&&b<=f||b>=j&&b<=g||b>=k&&b<=h)e=true;$(
+"#flgt-Fmly span").html("");if(e)$("#flgt-Fmly span").html(
+"A flat cancellation/change fee of Rs.1899 per passenger per way will be applicable on these special fares. Minimum two passengers will be required in the PNR after cancellation. In case of 2 passengers in a PNR, cancellation is not allowed."
+);else $("#flgt-Fmly span").html(
+"A flat cancellation/change fee of Rs.1899 per passenger per way will be applicable on these special fares. Minimum four passengers will be required in the PNR after cancellation. In case of 4 passengers in a PNR, cancellation is not allowed."
+)}function FillPreviusFilterdValues(){if(!IsAppliedFilter){$("#chkRefund").attr("checked",FilterArray.faretype[0].
+PrevRefund);if(FilterArray.faretype[0].PrevRefund==true)$("#chkRefund").parent().addClass("ez-checked");else $(
+"#chkRefund").parent().removeClass("ez-checked");$("#chkNoRefund").attr("checked",FilterArray.faretype[0].PrevNonRefund)
+;if(FilterArray.faretype[0].PrevNonRefund==true)$("#chkNoRefund").parent().addClass("ez-checked");else $("#chkNoRefund")
+.parent().removeClass("ez-checked");$("#chkNonStopo").attr("checked",FilterArray.stops[0].PrevNonStp);if(FilterArray.
+stops[0].PrevNonStp==true)$("#chkNonStopo").parent().addClass("ez-checked");else $("#chkNonStopo").parent().removeClass(
+"ez-checked");$("#chkOneStopo").attr("checked",FilterArray.stops[0].PrevOneStp);if(FilterArray.stops[0].PrevOneStp==true
+)$("#chkOneStopo").parent().addClass("ez-checked");else $("#chkOneStopo").parent().removeClass("ez-checked");$(
+"#chkTwoStopo").attr("checked",FilterArray.stops[0].PrevTwoStp);if(FilterArray.stops[0].PrevTwoStp==true)$(
+"#chkTwoStopo").parent().addClass("ez-checked");else $("#chkTwoStopo").parent().removeClass("ez-checked");$(
+"#chkNonStopr").attr("checked",FilterArray.stops[1].PrevNonStp);if(FilterArray.stops[1].PrevNonStp==true)$(
+"#chkNonStopr").parent().addClass("ez-checked");else $("#chkNonStopr").parent().removeClass("ez-checked");$(
+"#chkOneStopr").attr("checked",FilterArray.stops[1].PrevOneStp);if(FilterArray.stops[1].PrevOneStp==true)$(
+"#chkOneStopr").parent().addClass("ez-checked");else $("#chkOneStopr").parent().removeClass("ez-checked");$(
+"#chkTwoStopr").attr("checked",FilterArray.stops[1].PrevTwoStp);if(FilterArray.stops[1].PrevTwoStp==true)$(
+"#chkTwoStopr").parent().addClass("ez-checked");else $("#chkTwoStopr").parent().removeClass("ez-checked");$(
+"#chkMorningo").attr("checked",FilterArray.departTimings[0].PrevMorn);if(FilterArray.departTimings[0].PrevMorn==true)$(
+"#chkMorningo").parent().addClass("ez-checked");else $("#chkMorningo").parent().removeClass("ez-checked");$(
+"#chkMiddayo").attr("checked",FilterArray.departTimings[0].PrevAftrnoon);if(FilterArray.departTimings[0].PrevAftrnoon==
+true)$("#chkMiddayo").parent().addClass("ez-checked");else $("#chkMiddayo").parent().removeClass("ez-checked");$(
+"#chkAfternoono").attr("checked",FilterArray.departTimings[0].PrevNight);if(FilterArray.departTimings[0].PrevNight==true
+)$("#chkAfternoono").parent().addClass("ez-checked");else $("#chkAfternoono").parent().removeClass("ez-checked");$(
+"#chkEveningo").attr("checked",FilterArray.departTimings[0].PrevModNight);if(FilterArray.departTimings[0].PrevModNight==
+true)$("#chkEveningo").parent().addClass("ez-checked");else $("#chkEveningo").parent().removeClass("ez-checked");$(
+"#chkMorningr").attr("checked",FilterArray.departTimings[1].PrevMorn);if(FilterArray.departTimings[1].PrevMorn==true)$(
+"#chkMorningr").parent().addClass("ez-checked");else $("#chkMorningr").parent().removeClass("ez-checked");$(
+"#chkMiddayr").attr("checked",FilterArray.departTimings[1].PrevAftrnoon);if(FilterArray.departTimings[1].PrevAftrnoon==
+true)$("#chkMiddayr").parent().addClass("ez-checked");else $("#chkMiddayr").parent().removeClass("ez-checked");$(
+"#chkAfternoonr").attr("checked",FilterArray.departTimings[1].PrevNight);if(FilterArray.departTimings[1].PrevNight==true
+)$("#chkAfternoonr").parent().addClass("ez-checked");else $("#chkAfternoonr").parent().removeClass("ez-checked");$(
+"#chkEveningr").attr("checked",FilterArray.departTimings[1].PrevModNight);if(FilterArray.departTimings[1].PrevModNight==
+true)$("#chkEveningr").parent().addClass("ez-checked");else $("#chkEveningr").parent().removeClass("ez-checked");$(
+"#slider-rangeo").slider("option",{min:FilterArray.Farescale[0].OrginalMin,max:FilterArray.Farescale[0].OriginalMaxFAre}
+);$("#slider-rangeo").slider("values",0,FilterArray.Farescale[0].PrevMinFare);$("#slider-rangeo").slider("values",1,
+FilterArray.Farescale[0].PrevMaxFare);$("#amounto").html("`"+FilterArray.Farescale[0].PrevMinFare+" - `"+FilterArray.
+Farescale[0].PrevMaxFare);$("#slider-ranger").slider("option",{min:FilterArray.Farescale[1].OrginalMin,max:FilterArray.
+Farescale[1].OriginalMaxFAre});$("#slider-ranger").slider("values",0,FilterArray.Farescale[1].PrevMinFare);$(
+"#slider-ranger").slider("values",1,FilterArray.Farescale[1].PrevMaxFare);$("#amountr").html("`"+FilterArray.Farescale[1
+].PrevMinFare+" - `"+FilterArray.Farescale[1].PrevMaxFare);$("[name='allAirlines']").each(function(d,a){$(a).prop(
+"checked",false);$(a).parent().removeClass("ez-checked");var c=FilterArray.Airlines[0].PrevAirlines.split("|");for(var b
+=0;b<=c.length-1;b++)if(a.value.replace(/\s/g,"").toLowerCase()==c[b].replace(/\s/g,"").toLowerCase()){$(a).prop(
+"checked",true);$(a).parent().addClass("ez-checked")}});$("#chkMorningArrivalo").attr("checked",FilterArray.
+arrivalTimings[0].PrevMorn);if(FilterArray.arrivalTimings[0].PrevMorn==true)$("#chkMorningArrivalo").parent().addClass(
+"ez-checked");else $("#chkMorningArrivalo").parent().removeClass("ez-checked");$("#chkMiddayArrivalo").attr("checked",
+FilterArray.arrivalTimings[0].PrevAftrnoon);if(FilterArray.arrivalTimings[0].PrevAftrnoon==true)$("#chkMiddayArrivalo").
+parent().addClass("ez-checked");else $("#chkMiddayArrivalo").parent().removeClass("ez-checked");$(
+"#chkAfternoonArrivalo").attr("checked",FilterArray.arrivalTimings[0].PrevNight);if(FilterArray.arrivalTimings[0].
+PrevNight==true)$("#chkAfternoonArrivalo").parent().addClass("ez-checked");else $("#chkAfternoonArrivalo").parent().
+removeClass("ez-checked");$("#chkEveningArrivalo").attr("checked",FilterArray.arrivalTimings[0].PrevModNight);if(
+FilterArray.arrivalTimings[0].PrevModNight==true)$("#chkEveningArrivalo").parent().addClass("ez-checked");else $(
+"#chkEveningArrivalo").parent().removeClass("ez-checked");$("#chkMorningArrivalr").attr("checked",FilterArray.
+arrivalTimings[1].PrevMorn);if(FilterArray.arrivalTimings[1].PrevMorn==true)$("#chkMorningArrivalr").parent().addClass(
+"ez-checked");else $("#chkMorningArrivalr").parent().removeClass("ez-checked");$("#chkMiddayArrivalr").attr("checked",
+FilterArray.arrivalTimings[1].PrevAftrnoon);if(FilterArray.arrivalTimings[1].PrevAftrnoon==true)$("#chkMiddayArrivalr").
+parent().addClass("ez-checked");else $("#chkMiddayArrivalr").parent().removeClass("ez-checked");$(
+"#chkAfternoonArrivalr").attr("checked",FilterArray.arrivalTimings[1].PrevNight);if(FilterArray.arrivalTimings[1].
+PrevNight==true)$("#chkAfternoonArrivalr").parent().addClass("ez-checked");else $("#chkAfternoonArrivalr").parent().
+removeClass("ez-checked");$("#chkEveningArrivalr").attr("checked",FilterArray.arrivalTimings[1].PrevModNight);if(
+FilterArray.arrivalTimings[1].PrevModNight==true)$("#chkEveningArrivalr").parent().addClass("ez-checked");else $(
+"#chkEveningArrivalr").parent().removeClass("ez-checked");$("#slider-layovero").slider("option",{min:FilterArray.
+LayoverTime[0].OrginalMinLayover,max:FilterArray.LayoverTime[0].OriginalMaxLayover});$("#slider-layovero").slider(
+"values",0,FilterArray.LayoverTime[0].PrevMinLayover);$("#slider-layovero").slider("values",1,FilterArray.LayoverTime[0]
+.PrevMaxLayover);$("#layovero").html(minuteToHour(FilterArray.LayoverTime[0].PrevMinLayover,FilterArray.LayoverTime[0].
+PrevMaxLayover));$("#slider-layoverr").slider("option",{min:FilterArray.LayoverTime[1].OrginalMinLayover,max:FilterArray
+.LayoverTime[1].OriginalMaxLayover});$("#slider-layoverr").slider("values",0,FilterArray.LayoverTime[1].PrevMinLayover);
+$("#slider-layoverr").slider("values",1,FilterArray.LayoverTime[1].PrevMaxLayover);$("#layoverr").html(minuteToHour(
+FilterArray.LayoverTime[1].PrevMinLayover,FilterArray.LayoverTime[1].PrevMaxLayover));$("[name='allDeptsAirports']").
+each(function(d,a){$(a).prop("checked",false);$(a).parent().removeClass("ez-checked");var c=FilterArray.DepartAirports[0
+].PrevDepartAirports.split("|");for(var b=0;b<=c.length-1;b++)if(a.value.replace(/\s/g,"").toLowerCase()==c[b].replace(
+/\s/g,"").toLowerCase()){$(a).prop("checked",true);$(a).parent().addClass("ez-checked")}});$("[name='allArrAirports']").
+each(function(d,a){$(a).prop("checked",false);$(a).parent().removeClass("ez-checked");var c=FilterArray.ArrivalAirports[
+0].PrevArrivalAirports.split("|");for(var b=0;b<=c.length-1;b++)if(a.value.replace(/\s/g,"").toLowerCase()==c[b].replace
+(/\s/g,"").toLowerCase()){$(a).prop("checked",true);$(a).parent().addClass("ez-checked")}});$("[name='allConAirports']")
+.each(function(d,a){$(a).prop("checked",false);$(a).parent().removeClass("ez-checked");var c=FilterArray.
+ConnectingAirports[0].PrevConnectingAirports.split("|");for(var b=0;b<=c.length-1;b++)if(a.value.replace(/\s/g,"").
+toLowerCase()==c[b].replace(/\s/g,"").toLowerCase()){$(a).prop("checked",true);$(a).parent().addClass("ez-checked")}})}}
+function CloseFilterOuter(a){$(a).stop(true,false).fadeOut(600,function(){$.blockUI({message:
+"<div class='waitarea'><div class='waitcontainer'><div class='waitimage'><img width='60' height='60' alt='Loader' src='/content/images/ak/v1.0/Common/Loader.gif'></div><div class='waittxt'><span>Please Wait...</span></div></div></div>"
+,css:{width:"482px",border:"none",padding:"5px",backgroundColor:"#FFF","text-align":"left"}});FillPreviusFilterdValues()
+;$("#overlay").remove();var b=false;if(prevFilter!="fltfarescalediv"){}$.unblockUI()});if(flagOW==true&&flagRT==true)if(
+$(window).scrollTop()>$("html,body")[0].scrollHeight-$(window).innerHeight()-100)if($("#SectorType").val()=="D"&&$(
+"#SearchType").val()=="R")$(".botm-dis-main").stop(true,false).animate({bottom:"0px"},600,"easeOutCubic");else $(
+".botm-dis-main").stop(true,false).animate({bottom:$("#footer").outerHeight()+"px"},600,"easeOutCubic");else $(
+".botm-dis-main").stop(true,false).animate({bottom:"0px"},600,"easeOutCubic");IsAppliedFilter=false}function 
+unlimitedchanges(b){$("#divUnlimitedChanges").dialog({autoOpen:false,resizable:false,modal:true,title:
+"Terms and Conditions",width:725,draggable:false,position:{my:"center",at:"center",of:window},create:function(a,c){$(a.
+target).parent().css("position","absolute")}});$("#divUnlimitedChanges").css("display","block");$("#divUnlimitedChanges"
+).dialog("open");$("#divUnlimitedChanges").html(
+"<div class='fnt size4 cntr pdnTOpTrain'><br/>1. Preferred seat choice at no charge. <br/> 2. No change fees (unlimited changes) if changing to Spiceflex only <br/> 3. Change fee is waived off for changes from SpiceFlex fares to SpiceFlex fares only, however if there is any fare difference, that would apply.</div>"
+)}function Trackerlog(f,k,b){var g="",e="",d="",i="",p="",h="",j="";if($("#SectorType").val()=="D")if($("#SearchType").
+val().toLowerCase()=="o"){g=$(b).parent().parent().parent().find(".dis-top").html();e=$(b).parent().parent().find(
+".openbox-left").html();var a=$(b).parent().parent().find(".totel-fare").html().indexOf("`")+1,c=$(b).parent().parent().
+find(".totel-fare").html().indexOf("<",a);d=$(b).parent().parent().find(".totel-fare").html().substring(a,c);var a=e.
+indexOf('<eco-col">')+1,c=e.indexOf("|",a),n=e.substring(a,c);h=$(b).parent().parent().parent().find(".dis-top").find(
+".dspl-flgt-nm").html().toLowerCase().split("<br>")[1]}else{if(k=="o"){g=$(b).parent().parent().parent().parent().find(
+"#owSelected").html();e=$("#owflight"+f).find(".split-open-box").html();var a=$("#owflight"+f).find(".totel-fare-big").
+html().indexOf('lft">')+1,c=$("#owflight"+f).find(".totel-fare-big").html().indexOf("<",a);d=$("#owflight"+f).find(
+".totel-fare-big").html().substring(a,c);d=d.split(">")[1];h=$(b).parent().parent().parent().parent().find("#owSelected"
+).find(".flt-depbt").html()}else{g=$(b).parent().parent().parent().parent().find("#rtSelected").html();j=$(b).parent().
+parent().parent().parent().find("#rtSelected").find(".flt-depbt").html();e=$("#rtflight"+f).find(".split-open-box").html
+();var a=$("#rtflight"+f).find(".totel-fare-big").html().indexOf('lft">')+1,c=$("#rtflight"+f).find(".totel-fare-big").
+html().indexOf("<",a);d=$("#rtflight"+f).find(".totel-fare-big").html().substring(a,c);d=d.split(">")[1]}var a=$(
+".totel-fare-dic").html().indexOf('totalamt">')+1,l=8;if(a==0){a=$(".totel-fare-dic").html().indexOf("totalamt>")+1;l=7}
+var c=$(".totel-fare-dic").html().indexOf("<",a);i=$(".totel-fare-dic").html().substring(a+l,c);i=i.split(">")[1]}else 
+if($("#SectorType").val()=="I")if($("#SearchType").val().toLowerCase()=="o"){g=$(b).parent().parent().parent().find(
+".dis-top").html();e=$(b).parent().parent().find(".openbox-left").html();var a=$(b).parent().parent().find(".totel-fare"
+).html().indexOf("`")+1,c=$(b).parent().parent().find(".totel-fare").html().indexOf("<",a);d=$(b).parent().parent().find
+(".totel-fare").html().substring(a,c);var a=e.indexOf('<eco-col">')+1,c=e.indexOf("|",a),n=e.substring(a,c);h=$(b).
+parent().parent().parent().find(".dis-top").find(".dspl-flgt-nm").html().toLowerCase().split("<br>")[1]}else if(k=="o"){
+g=$(b).parent().parent().parent().parent().find(".dis-top").html();e=$(b).parent().parent().parent().parent().find(
+".openbox-inter").html().split("dtl-head-btm")[0];var a=$(b).parent().parent().parent().parent().find(".totel-fare").
+html().indexOf('lft">')+1,c=$(b).parent().parent().parent().parent().find(".totel-fare").html().indexOf("<",a);d=$(b).
+parent().parent().parent().parent().find(".totel-fare").html().substring(a,c);d=d.split(">")[1];h=$(b).parent().parent()
+.parent().parent().find(".openbox-inter").find(".eco-col").html().split("|")[0]}else{g=$(b).parent().parent().parent().
+parent().find(".dis-bt").html();e=$(b).parent().parent().parent().parent().find(".openbox-inter").html().split(
+"dtl-head-btm")[1];var a=$(b).parent().parent().parent().parent().find(".totel-fare").html().indexOf("`")+1,c=$(b).
+parent().parent().parent().parent().find(".totel-fare").html().indexOf("<",a);d=$(b).parent().parent().parent().parent()
+.find(".totel-fare").html().substring(a,c);d=d.split(">")[1];j=e.split("|")[0].split('eco-col">')[1]}try{var m={
+Flightdetails:g.replace(/</g,"(").replace(/>/g,")"),ConnectionDetails:e.replace(/</g,"(").replace(/>/g,")"),Netfare:d,
+Sectortype:$("#SectorType").val(),Searchtype:$("#SearchType").val(),FareType:rsffaretype,Totfare:i.replace(/</g,"(").
+replace(/>/g,")"),Trackerid:trackerid,FlightNo:h.replace(/</g,"(").replace(/>/g,")"),RetFlno:j.replace(/</g,"(").replace
+(/>/g,")"),Key:$("#Key").val()};$.ajax({url:"/Flight/SaveTrackerlog/",data:m,type:"Post",async:false,dataType:"json",
+success:function(o){}})}catch(o){}}function SaveFareCalender(a,b){var v="",y="",l="",e="",i="",k="",f="",x="",z="",h="",
+j="",u=false,t=0,m=0,q=0,p=0,s=0,r=0,o=0,n=0,w=1,g=$("#Adults").val(),A=$("#hdnFarecalendarAUI").val();e=$("#SearchType"
+).val();if((e=="O"||e=="R")&&a!=null&&a.length>0){v=a[0].DepartureAirportCode;y=a[0].ArrivalAirportCode;l=a[0].
+SectorType;e=e;i=a[0].DepartureDateTime;t=parseFloat(a[0].FareDetail.AdultBaseFare)+parseFloat(a[0].FareDetail.
+TotalAdultSC)+parseFloat(a[0].FareDetail.TotalAdultST)+parseFloat(a[0].FareDetail.TotalAdultTax)+parseFloat(a[0].
+FareDetail.AdultCommissionTDS)+parseFloat(a[0].FareDetail.AdultDiscountTDS)+parseFloat(a[0].FareDetail.AdultTransFee);m=
+parseFloat(a[0].FareDetail.AdultDiscount)+parseFloat(a[0].FareDetail.AdultCommission);f=Math.round((t-m)/g);h=a[0].
+AirlineCode;if(b!=null&&b.length>0)for(var d=0;d<a.length;d++){for(var c=0;c<b.length;c++)if(parseInt(findTimeDiff(a[d].
+ArrivalDateTime,b[c].DepartureDateTime,"T"),10)>3){k=b[c].DepartureDateTime;j=b[c].AirlineCode;q=parseFloat(a[d].
+FareDetail.AdultBaseFare)+parseFloat(a[d].FareDetail.TotalAdultSC)+parseFloat(a[d].FareDetail.TotalAdultST)+parseFloat(a
+[d].FareDetail.TotalAdultTax)+parseFloat(a[d].FareDetail.AdultCommissionTDS)+parseFloat(a[d].FareDetail.AdultDiscountTDS
+)+parseFloat(a[d].FareDetail.AdultTransFee);p=parseFloat(a[d].FareDetail.AdultDiscount)+parseFloat(a[d].FareDetail.
+AdultCommission);s=parseFloat(b[c].FareDetail.AdultBaseFare)+parseFloat(b[c].FareDetail.TotalAdultSC)+parseFloat(b[c].
+FareDetail.TotalAdultST)+parseFloat(b[c].FareDetail.TotalAdultTax)+parseFloat(b[c].FareDetail.AdultCommissionTDS)+
+parseFloat(b[c].FareDetail.AdultDiscountTDS)+parseFloat(b[c].FareDetail.AdultTransFee);r=parseFloat(b[c].FareDetail.
+AdultDiscount)+parseFloat(b[c].FareDetail.AdultCommission);f=Math.round((q+s-(p+r))/g);i=a[d].DepartureDateTime;h=a[d].
+AirlineCode;u=true;break}if(u)break}if(a[0].ReturnFlight!=null){e="R";l="I";k=a[0].ReturnFlight.DepartureDateTime;j=a[0]
+.ReturnFlight.AirlineCode;o=parseFloat(a[0].ReturnFlight.FareDetail.AdultBaseFare)+parseFloat(a[0].ReturnFlight.
+FareDetail.TotalAdultSC)+parseFloat(a[0].ReturnFlight.FareDetail.TotalAdultST)+parseFloat(a[0].ReturnFlight.FareDetail.
+TotalAdultTax)+parseFloat(a[0].ReturnFlight.FareDetail.AdultCommissionTDS)+parseFloat(a[0].ReturnFlight.FareDetail.
+AdultDiscountTDS)+parseFloat(a[0].ReturnFlight.FareDetail.AdultTransFee);n=parseFloat(a[0].ReturnFlight.FareDetail.
+AdultDiscount)+parseFloat(a[0].ReturnFlight.FareDetail.AdultCommission);w=Math.round((o-n)/g);f=f+w}x=$("#Adults").val()
++"A-"+$("#Chindren").val()+"C-"+$("#Infants").val()+"I";z=$("#hdnUTL").val();var B={FareCalendar_FromSector:v,
+FareCalendar_ToSector:y,FareCalendar_SectorType:l,FareCalendar_SearchType:e,FareCalendar_OnwardDateTime:i,
+FareCalendar_ReturnDateTime:k,FareCalendar_NetFare:f,FareCalendar_Pax:x,FareCalendar_UTL:z,FareCalendar_AUI:A,
+FareCalendar_OnwardAirline:h,FareCalendar_ReturnAirline:j};$.ajax({url:"/Utility/FareCalendar/",data:B,type:"Post",async
+:false,dataType:"json",success:function(C){var D=""}})}}function ChangedepFilter(a,b){$("#divDepartureReturn").css(
+"display","none");$("#divDepartureOnward").css("display","none");if(a=="o"){$("#divDepartureOnward").css("display","");$
+("#depOnward").attr("class","fltr-tab-left");$("#depReturn").attr("class","fltr-tab-right");departureType="o"}else{$(
+"#divDepartureReturn").css("display","");$("#depOnward").attr("class","fltr-tab-right");$("#depReturn").attr("class",
+"fltr-tab-left");departureType="r"}}function ChangeStopFilter(a,b){$("#divStopOnward").css("display","none");$(
+"#divStopReturn").css("display","none");if(a=="o"){$("#divStopOnward").css("display","");$("#stopOnward").attr("class",
+"fltr-tab-left");$("#stopReturn").attr("class","fltr-tab-right");stopType="o"}else{$("#divStopReturn").css("display","")
+;$("#stopOnward").attr("class","fltr-tab-right");$("#stopReturn").attr("class","fltr-tab-left");stopType="r"}}function 
+ChangedArrivalFilter(a,b){$("#divArrivalOnward").css("display","none");$("#divArrivalReturn").css("display","none");if(a
+=="o"){$("#divArrivalOnward").css("display","");$("#arrivalOnward").attr("class","fltr-tab-left");$("#arrivalReturn").
+attr("class","fltr-tab-right");arrivalType="o"}else{$("#divArrivalReturn").css("display","");$("#arrivalOnward").attr(
+"class","fltr-tab-right");$("#arrivalReturn").attr("class","fltr-tab-left");arrivalType="r"}}function minuteToHour(e,f){
+var a=Math.floor(e/60),c=e-a*60;if(a.toString().length==1)a="0"+a;if(c.toString().length==1)c="0"+c;var b=Math.floor(f/
+60),d=f-b*60;if(b.toString().length==1)b="0"+b;if(d.toString().length==1)d="0"+d;return a+":"+c+" - "+b+":"+d}

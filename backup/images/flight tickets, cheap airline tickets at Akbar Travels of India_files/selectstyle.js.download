@@ -1,0 +1,9 @@
+// Minified by MiniME from toptensoftware.com
+(function(a){a.fn.extend({customStyle:function(g){if(!a.browser.msie||a.browser.msie&&a.browser.version>8)return this.
+each(function(){var e=a(this).find(":selected");if(a(this).next().hasClass("customStyleSelectBox"))a(this).next().remove
+();a(this).after('<span class="customStyleSelectBox"><span class="customStyleSelectBoxInner">'+e.text()+"</span></span>"
+).css({position:"absolute",opacity:"0",fontSize:a(this).next().css("font-size")});var b=a(this).next(),c=parseInt(a(this
+).width())-parseInt(b.css("padding-left"))-parseInt(b.css("padding-right")),h=b.find(":first-child");b.css({width:c,
+display:"inline-block"});h.css({width:c-30,display:"inline-block",height:"32px"});var f=parseInt(b.height())+parseInt(b.
+css("padding-top"))+parseInt(b.css("padding-bottom"));a(this).height(f).change(function(){h.text(a(this).find(
+":selected").text()).parent().addClass("changed")})})}})})(jQuery)
