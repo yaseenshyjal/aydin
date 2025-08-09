@@ -715,6 +715,9 @@ header#sidebar-header ul.nav-menu .mega-links-4columns ul.sub-menu-columns {
       font-family: FontAwesome; }
 
 @media only screen and (max-width: 768px) {
+  .logo img{
+    width: 400px !important;
+  }
   header a.mobile-toggle {
     padding: 20px;
     font-size: 20px;
@@ -2747,6 +2750,10 @@ header#sidebar-header ul.nav-menu .mega-links-4columns ul.sub-menu-columns {
   .full-screen-intro {
     height: auto; } }
 @media only screen and (max-width: 450px) {
+  .logo img{
+    width: 400px !important;
+  }
+
   #search-filter-2 {
     margin-top: 0px;
     padding-top: 50px; }
